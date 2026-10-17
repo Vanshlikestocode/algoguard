@@ -1,0 +1,4 @@
+Strategy,ATR stops hit,Halts (drawdown),Daily-loss cooldowns,Losing-streak pauses,Entries blocked: India VIX filter,Entries blocked: Daily loss limit,Entries blocked: Losing-streak cooldown,Entries blocked: Drawdown circuit breaker
+EMA Crossover (20/100),100,4,20,56,312,23,129,307
+Donchian Breakout (55/20),120,0,6,57,221,24,148,0
+RSI-2 Mean Reversion,91,1,1,64,140,0,269,15
