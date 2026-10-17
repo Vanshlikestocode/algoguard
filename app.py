@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from dataclasses import replace
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from plotly.subplots import make_subplots
 from algoguard import data
 from algoguard.backtest import run_backtest
 from algoguard.metrics import drawdown, summarize
-from algoguard.risk import GUARDED, RAW, RULE_LABELS
+from algoguard import commitment
+from algoguard.risk import GUARDED, PROFILES, RAW, RULE_LABELS
 from algoguard.strategies import STRATEGIES, build_signals
 
 RAW_C, GRD_C, BMK_C = "#B4483C", "#1F6F8B", "#8A8A8A"
@@ -46,37 +48,56 @@ with st.sidebar:
     st.subheader("Guardrails")
     v2_file = Path(__file__).resolve().parent / "results" / "7_v2_chosen_settings.json"
     v2_sets = json.loads(v2_file.read_text())["settings"] if v2_file.exists() else {}
-    presets = ["Guarded v1 (same rules for every strategy)"]
+    saved = None if demo else commitment.load()
+    saved_c = (saved or {}).get("committed", {})
+    starts = {}
+    if saved_c.get("lock_enabled"):
+        starts["My locked rules"] = replace(GUARDED, **{f: v for f, v in saved_c.items() if f not in ("lock_enabled", "wait_hours")})
+    starts |= {"Conservative": PROFILES["Conservative"],
+              "Balanced (v1 defaults)": PROFILES["Balanced"],
+              "Aggressive": PROFILES["Aggressive"]}
     if strategy in v2_sets and not demo:
-        presets.append("Guarded v2 (chosen for this strategy, pre-2022 data)")
-    preset = st.radio("Start from", presets, help="v2 settings come from `python run.py` (section 7 of the report).")
-    g = replace(GUARDED, **v2_sets[strategy]) if preset.startswith("Guarded v2") else GUARDED
-    k = "v2" if preset.startswith("Guarded v2") else "v1"  # new widget keys so the preset resets the controls
+        starts["v2 for this strategy (chosen on pre-2022 data)"] = replace(GUARDED, **v2_sets[strategy])
+    preset = st.radio("Start from", list(starts), index=0 if "My locked rules" in starts else 1,
+                      help="Risk profiles are hand-picked starting points, not tuned. Adjust any rule below.")
+    g = starts[preset]
+    k = preset.split()[0]  # new widget keys per preset, so picking one resets the controls
     stop_on = st.checkbox("ATR stop-loss", g.stop_atr_mult is not None, key=f"stop_{k}")
     stop_k = st.slider("Stop distance (x ATR)", 1.0, 6.0, g.stop_atr_mult or GUARDED.stop_atr_mult, 0.5, disabled=not stop_on, key=f"stopk_{k}")
-    dl_on = st.checkbox("Daily loss limit", True)
-    dl = st.slider("Max portfolio loss in a day (%)", 0.5, 5.0, g.daily_loss_limit * 100, 0.25, disabled=not dl_on) / 100
-    dl_cd = st.slider("Cooldown after breach (sessions)", 1, 10, g.daily_loss_cooldown, disabled=not dl_on)
-    cl_on = st.checkbox("Losing-streak cooldown", True)
-    cl = st.slider("Losing trades in a row", 2, 8, g.consec_loss_limit, disabled=not cl_on)
-    cl_cd = st.slider("Pause length (sessions)", 1, 20, g.consec_loss_cooldown, disabled=not cl_on)
-    dd_on = st.checkbox("Drawdown circuit breaker", True)
-    dd = st.slider("Halt at drawdown (%)", 5, 40, int(g.max_drawdown * 100), disabled=not dd_on) / 100
-    dd_days = st.slider("Halt length (sessions)", 5, 60, g.dd_halt_days, disabled=not dd_on)
+    dl_on = st.checkbox("Daily loss limit", g.daily_loss_limit is not None, key=f"dl_{k}")
+    dl = st.slider("Max portfolio loss in a day (%)", 0.5, 5.0, (g.daily_loss_limit or GUARDED.daily_loss_limit) * 100, 0.25, disabled=not dl_on, key=f"dlv_{k}") / 100
+    dl_cd = st.slider("Cooldown after breach (sessions)", 1, 10, g.daily_loss_cooldown, disabled=not dl_on, key=f"dlc_{k}")
+    cl_on = st.checkbox("Losing-streak cooldown", g.consec_loss_limit is not None, key=f"cl_{k}")
+    cl = st.slider("Losing trades in a row", 2, 8, g.consec_loss_limit or GUARDED.consec_loss_limit, disabled=not cl_on, key=f"clv_{k}")
+    cl_cd = st.slider("Pause length (sessions)", 1, 20, g.consec_loss_cooldown, disabled=not cl_on, key=f"clc_{k}")
+    dd_on = st.checkbox("Drawdown circuit breaker", g.max_drawdown is not None, key=f"dd_{k}")
+    dd = st.slider("Halt at drawdown (%)", 5, 40, int(round((g.max_drawdown or GUARDED.max_drawdown) * 100)), disabled=not dd_on, key=f"ddv_{k}") / 100
+    dd_days = st.slider("Halt length (sessions)", 5, 60, g.dd_halt_days, disabled=not dd_on, key=f"ddd_{k}")
     dd_flat = st.checkbox("Breaker sells everything (off = only block new entries)", g.dd_flatten, disabled=not dd_on, key=f"ddf_{k}")
     vix_on = st.checkbox("India VIX filter", g.vix_limit is not None, key=f"vix_{k}")
     vix_lim = st.slider("No new entries when VIX above", 12.0, 45.0, g.vix_limit or GUARDED.vix_limit, 0.5, disabled=not vix_on, key=f"vixl_{k}")
-    vt_on = st.checkbox("Volatility-scaled sizing", True)
-    vt = st.slider("Target volatility per position (%)", 10, 50, int(g.vol_target * 100), disabled=not vt_on) / 100
-    cap = st.slider("Max size of one position (%)", 5, 50, int(g.max_position_pct * 100)) / 100
+    vt_on = st.checkbox("Volatility-scaled sizing", g.vol_target is not None, key=f"vt_{k}")
+    vt = st.slider("Target volatility per position (%)", 10, 50, int(round((g.vol_target or GUARDED.vol_target) * 100)), disabled=not vt_on, key=f"vtv_{k}") / 100
+    cap = st.slider("Max size of one position (%)", 5, 50, int(round(g.max_position_pct * 100)), key=f"cap_{k}") / 100
 
-cfg = replace(GUARDED,
-              stop_atr_mult=stop_k if stop_on else None,
-              daily_loss_limit=dl if dl_on else None, daily_loss_cooldown=dl_cd,
-              consec_loss_limit=cl if cl_on else None, consec_loss_cooldown=cl_cd,
-              max_drawdown=dd if dd_on else None, dd_halt_days=dd_days, dd_flatten=dd_flat,
-              vix_limit=vix_lim if vix_on else None,
-              vol_target=vt if vt_on else None, max_position_pct=cap)
+    st.subheader("Commitment lock")
+    lock_on = st.toggle("Lock my rules", bool(saved_c.get("lock_enabled")), help="Tightening a rule applies at once. Loosening one, or "
+                        "switching the lock off, only applies after the waiting period.")
+    waits = {"1 minute (demo)": 1 / 60, "1 hour": 1.0, "24 hours": 24.0, "7 days": 168.0}
+    saved_wait = next((lbl for lbl, h in waits.items() if abs(h - saved_c.get("wait_hours", 24.0)) < 1e-9), "24 hours")
+    wait_lbl = st.select_slider("Waiting period for loosening", list(waits), value=saved_wait)
+
+requested = {"stop_atr_mult": stop_k if stop_on else None,
+             "daily_loss_limit": dl if dl_on else None, "daily_loss_cooldown": dl_cd,
+             "consec_loss_limit": cl if cl_on else None, "consec_loss_cooldown": cl_cd,
+             "max_drawdown": dd if dd_on else None, "dd_halt_days": dd_days, "dd_flatten": dd_flat,
+             "vix_limit": vix_lim if vix_on else None,
+             "vol_target": vt if vt_on else None, "max_position_pct": cap,
+             "lock_enabled": lock_on, "wait_hours": waits[wait_lbl]}
+lock_state, effective = commitment.reconcile(commitment.load(), requested, datetime.now())
+if not demo:
+    commitment.save(lock_state)
+cfg = replace(GUARDED, **{f: v for f, v in effective.items() if f not in ("lock_enabled", "wait_hours")})
 
 try:
     prices, vix, index = load(demo)
@@ -95,6 +116,28 @@ e_grd = grd.equity.loc[sl] / grd.equity.loc[sl].iloc[0] * capital
 
 if demo:
     st.warning("Synthetic demo data: these numbers are not market results.")
+def fmt(f, v):
+    if v is None:
+        return "off"
+    if isinstance(v, bool):
+        return "on" if v else "off"
+    if f in ("daily_loss_limit", "max_drawdown", "vol_target", "max_position_pct"):
+        return f"{v:.2%}".replace(".00%", "%")
+    if f == "stop_atr_mult":
+        return f"{v:g}x ATR"
+    if f == "wait_hours":
+        return next((lbl for lbl, h in waits.items() if abs(h - v) < 1e-9), f"{v:g} h")
+    return f"{v:g}"
+
+
+pend = lock_state["pending"]
+if pend:
+    st.warning("**Commitment lock: these loosenings are waiting.** The backtest below uses your committed rules until then.\n\n"
+               + "\n".join(f"- {commitment.LABELS.get(f, f)}: {fmt(f, effective[f])} → {fmt(f, p['value'])}, "
+                            f"applies {datetime.fromisoformat(p['effective_at']):%d %b %H:%M}" for f, p in pend.items()))
+elif effective.get("lock_enabled"):
+    st.info(f"Rules locked. Tightening applies at once; loosening waits {fmt('wait_hours', effective['wait_hours'])}.")
+
 st.subheader(f"{strategy}: raw vs guarded")
 m_raw, m_grd = summarize(e_raw), summarize(e_grd)
 cols = st.columns(5)
@@ -126,7 +169,25 @@ fig.update_layout(height=560, margin=dict(l=10, r=10, t=10, b=10), legend=dict(o
                   hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
-t1, t2, t3, t4 = st.tabs(["Full metrics", "Audit log", "Trades", "Rule activity"])
+t1, t5, t2, t3, t4 = st.tabs(["Full metrics", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
+with t5:
+    split = pd.Timestamp("2022-01-01")
+    rows = {}
+    for lab, r in (("Raw", raw), ("Guarded", grd)):
+        for per, (a, b) in {"Before 2022": (None, split - pd.Timedelta(days=1)), "2022 onward": (split, None)}.items():
+            e = r.equity.loc[a:b]
+            rows[(lab, per)] = summarize(e / e.iloc[0] * capital)
+    hold = pd.DataFrame(rows).T[["CAGR %", "Sharpe", "Max drawdown %", "Worst day %", "Calmar"]]
+    hold.index.names = ["Layer", "Period"]
+    st.caption("Tuning the sliders until the chart looks good fits them to the past. Judge your settings on "
+               "2022 onward: if they only shine before 2022, they will probably not hold up.")
+    st.dataframe(hold.style.format("{:.2f}"), use_container_width=True)
+    d_in = hold.loc[("Guarded", "Before 2022"), "Calmar"] - hold.loc[("Raw", "Before 2022"), "Calmar"]
+    d_out = hold.loc[("Guarded", "2022 onward"), "Calmar"] - hold.loc[("Raw", "2022 onward"), "Calmar"]
+    verdict = ("helps in both periods" if d_in > 0 and d_out > 0 else
+               "helps only before 2022, so it may be fitted to the past" if d_in > 0 else
+               "helps only from 2022" if d_out > 0 else "does not beat raw in either period")
+    st.markdown(f"**Guarded vs raw on Calmar:** {d_in:+.2f} before 2022, {d_out:+.2f} from 2022. These settings {verdict}.")
 with t1:
     full = pd.DataFrame({"Raw": summarize(e_raw, raw.trades, raw.exposure.loc[sl]),
                          "Guarded": summarize(e_grd, grd.trades, grd.exposure.loc[sl])})

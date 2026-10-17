@@ -41,6 +41,18 @@ RAW = RiskConfig(enabled=False, vol_target=None, stop_atr_mult=None, daily_loss_
                  consec_loss_limit=None, max_drawdown=None, vix_limit=None, max_position_pct=1.0)
 GUARDED = RiskConfig()
 
+# Starting points for different risk appetites. Hand-picked, NOT tuned on the data: they show
+# that the same engine can serve a cautious and an aggressive trader. Balanced = v1 defaults.
+PROFILES = {
+    "Conservative": replace(GUARDED, daily_loss_limit=0.015, daily_loss_cooldown=3, consec_loss_limit=3,
+                            consec_loss_cooldown=10, max_drawdown=0.10, dd_halt_days=20, vix_limit=22.0,
+                            stop_atr_mult=2.5, vol_target=0.20, max_position_pct=0.10),
+    "Balanced": GUARDED,
+    "Aggressive": replace(GUARDED, daily_loss_limit=0.04, daily_loss_cooldown=1, consec_loss_limit=5,
+                          consec_loss_cooldown=3, max_drawdown=0.25, dd_halt_days=10, dd_flatten=False,
+                          vix_limit=None, stop_atr_mult=5.0, vol_target=0.35, max_position_pct=0.25),
+}
+
 RULES = ["stop_atr_mult", "daily_loss_limit", "consec_loss_limit", "max_drawdown", "vix_limit", "vol_target"]
 RULE_LABELS = {
     "stop_atr_mult": "ATR stop-loss",

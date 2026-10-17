@@ -10,7 +10,8 @@ Last updated: 17 Oct 2026. Replaces the status.md handover. Use `algoguard_v3.zi
 | 2. v2 strategy-aware guardrails | Done, chosen on pre-2022 data, tested once on 2022+ | `algoguard/v2.py`, `run.py` section 7, `results/7_*` |
 | 3. Dashboard check | Done. New "Start from: v1 / v2" switch and a "breaker sells everything" checkbox | `app.py` |
 | 4. Paper trading | Done: 60 sessions, 11 orders, 11 filled, 0 rejected, ended Rs 9,95,787 | `paper_orders.csv` |
-| 5. Deck | Done, 16 slides with speaker notes | Claude artifact link (see the chat) |
+| 5. Deck | Done, 18 slides with speaker notes | Claude artifact link (see the chat) |
+| Extra: risk profiles, commitment lock, before/after-2022 tab | Done, 16 tests pass, checked in the dashboard | `risk.py` PROFILES, `algoguard/commitment.py`, `app.py`, deck slides 13-14 |
 | 6. Rehearse with Q&A | Still to do, by both of us | `REVIEW_GUIDE.md` (3 new v2 questions added) |
 
 Data was re-downloaded on 17 Oct 2026 and the main table matches the old status.md exactly (2 Jan 2012 to 16 Oct 2026, 3,649 sessions). Data CSVs are inside the zip, so nothing needs internet on the day.
@@ -51,6 +52,17 @@ Out-of-sample (2022 onward):
 
 v2 beat v1 on all three and raw on return for EMA and Donchian, but drawdown stayed 0.3 to 1.2 points deeper than raw. Present it as that: strategy-aware rules won back the return v1 gave away; cutting tail risk out of sample is still open.
 
+## Risk profiles (EMA crossover)
+
+| Profile | 2012-26 CAGR / DD | 2022+ CAGR / DD |
+|---|---|---|
+| No rules | 7.55 / -18.33 | 2.81 / -14.81 |
+| Conservative | 5.81 / -15.68 | 3.22 / -12.48 |
+| Balanced (v1) | 6.79 / -23.56 | 3.38 / -15.20 |
+| Aggressive | 7.79 / -19.35 | 2.45 / -17.08 |
+
+From 2022, Conservative also beat raw on drawdown for Donchian (-10.19 vs -10.52) and RSI-2 (-7.66 vs -8.96). Mostly from holding less (57% vs 70% invested on EMA). Profiles were set by hand before testing.
+
 ## Code changes in this version
 
 - `risk.py`: `dd_flatten` flag (False = breaker only blocks new entries, logged as "HALT").
@@ -61,7 +73,7 @@ v2 beat v1 on all three and raw on return for EMA and Donchian, but drawdown sta
 
 ## Before the review
 
-- Put team names and the guide's name on the cover slide (placeholder in brackets).
+- Delete `rules_lock.json` (if it exists) so the dashboard starts unlocked.
 - On the Windows laptop: extract `algoguard_v3.zip` into `C:\Projects` (it contains the `algoguard` folder), then `python -m pytest -q tests`, `python run.py`, `streamlit run app.py`. No `--download` needed; data is included.
-- Rehearse the 2-minute demo on slide 14 (its speaker notes have the clicks).
+- Rehearse the 2-minute demo on slide 16 (its speaker notes have the clicks).
 - Share the deck link with your partner from the deck's Share menu; it is private until shared.
