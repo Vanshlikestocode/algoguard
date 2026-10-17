@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime
 from dataclasses import replace
 from pathlib import Path
@@ -35,6 +36,22 @@ def signals_for(demo: bool, strategy: str):
     return build_signals(prices, STRATEGIES[strategy])
 
 
+# On Streamlit Community Cloud the app runs from /mount/src/... and is shared by every visitor,
+# so the commitment lock lives in each visitor's browser session instead of one shared file.
+HOSTED = Path(__file__).resolve().as_posix().startswith("/mount/src/") or os.environ.get("ALGOGUARD_HOSTED") == "1"
+
+
+def load_lock():
+    return st.session_state.get("lock_state") if HOSTED else commitment.load()
+
+
+def save_lock(state):
+    if HOSTED:
+        st.session_state["lock_state"] = state
+    else:
+        commitment.save(state)
+
+
 has_real = any(data.DATA_DIR.glob("*.NS.csv"))
 with st.sidebar:
     st.title("AlgoGuard")
@@ -48,10 +65,14 @@ with st.sidebar:
     st.subheader("Guardrails")
     v2_file = Path(__file__).resolve().parent / "results" / "7_v2_chosen_settings.json"
     v2_sets = json.loads(v2_file.read_text())["settings"] if v2_file.exists() else {}
-    saved = None if demo else commitment.load()
+    saved = None if demo else load_lock()
     saved_c = (saved or {}).get("committed", {})
     starts = {}
-    if saved_c.get("lock_enabled"):
+    # Offer "My locked rules" only when a session OPENS with a lock on (e.g. after a reload). Adding the
+    # option mid-session would reset every control and swallow the user's next click.
+    if "open_with_lock" not in st.session_state:
+        st.session_state["open_with_lock"] = bool(saved_c.get("lock_enabled"))
+    if st.session_state["open_with_lock"] and saved_c:
         starts["My locked rules"] = replace(GUARDED, **{f: v for f, v in saved_c.items() if f not in ("lock_enabled", "wait_hours")})
     starts |= {"Conservative": PROFILES["Conservative"],
               "Balanced (v1 defaults)": PROFILES["Balanced"],
@@ -86,6 +107,8 @@ with st.sidebar:
     waits = {"1 minute (demo)": 1 / 60, "1 hour": 1.0, "24 hours": 24.0, "7 days": 168.0}
     saved_wait = next((lbl for lbl, h in waits.items() if abs(h - saved_c.get("wait_hours", 24.0)) < 1e-9), "24 hours")
     wait_lbl = st.select_slider("Waiting period for loosening", list(waits), value=saved_wait)
+    if HOSTED:
+        st.caption("Web version: your lock lasts for this browser session. Run the app locally to keep it across restarts.")
 
 requested = {"stop_atr_mult": stop_k if stop_on else None,
              "daily_loss_limit": dl if dl_on else None, "daily_loss_cooldown": dl_cd,
@@ -94,9 +117,9 @@ requested = {"stop_atr_mult": stop_k if stop_on else None,
              "vix_limit": vix_lim if vix_on else None,
              "vol_target": vt if vt_on else None, "max_position_pct": cap,
              "lock_enabled": lock_on, "wait_hours": waits[wait_lbl]}
-lock_state, effective = commitment.reconcile(commitment.load(), requested, datetime.now())
+lock_state, effective = commitment.reconcile(load_lock(), requested, datetime.now())
 if not demo:
-    commitment.save(lock_state)
+    save_lock(lock_state)
 cfg = replace(GUARDED, **{f: v for f, v in effective.items() if f not in ("lock_enabled", "wait_hours")})
 
 try:
