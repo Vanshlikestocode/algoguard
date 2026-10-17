@@ -13,7 +13,7 @@ cd algoguard
 conda create -n algoguard python=3.11 -y
 conda activate algoguard
 pip install -r requirements.txt
-python -m pytest -q tests          # 8 checks incl. no look-ahead
+python -m pytest -q tests          # 16 checks incl. no look-ahead and the commitment lock
 python run.py --download           # fetch NSE data (once, needs internet)
 python run.py                      # all experiments -> results\
 python paper_trade.py --days 60    # paper-trading replay through the broker layer
@@ -33,10 +33,11 @@ Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 | `algoguard/risk.py` | The guardrail engine: ATR stops, daily loss limit, losing-streak cooldown, drawdown circuit breaker, India VIX filter, volatility-scaled sizing. Every intervention logged with its reason |
 | `algoguard/backtest.py` | Event-driven daily portfolio backtester. Signals at close, fills at next open, stops intraday, 0.15% cost per side |
 | `algoguard/v2.py` | Guarded v2: per-strategy guardrail settings chosen from a 16-setting menu on pre-2022 data only, then tested once on 2022+ |
+| `algoguard/commitment.py` | Commitment lock: tightening a rule applies at once, loosening waits (1 h / 24 h / 7 days); turning the lock off or shortening the wait also waits. State saved in `rules_lock.json` |
 | `algoguard/metrics.py` | CAGR, Sharpe, Sortino, max drawdown, Calmar, worst day, VaR, profit factor |
 | `algoguard/broker.py` | Execution layer built around SEBI's retail algo framework: 10 orders/s limiter, MPP-protected limit orders, daily login, strategy tags. SimBroker + Kite Connect mapping |
 | `run.py` | Experiments: raw vs guarded, in/out-of-sample, ablation, parameter grid, cost sensitivity, intervention counts, v2 (section 7) |
-| `app.py` | Streamlit dashboard: toggle each rule and see the effect live; audit log |
+| `app.py` | Streamlit dashboard: start from a risk profile (Conservative / Balanced / Aggressive) or v2, toggle each rule, commitment lock, before-vs-after-2022 check, audit log |
 | `paper_trade.py` | Day-by-day replay through the broker layer |
 | `tests/` | No look-ahead, rules fire, costs bite, no leverage, rate limiter, MPP pricing |
 
