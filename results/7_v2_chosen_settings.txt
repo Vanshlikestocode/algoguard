@@ -1,0 +1,4 @@
+Chosen on data before 2022-01-01 only (highest in-sample Calmar):
+EMA Crossover (20/100): breaker: sell all, VIX filter: off, stop: none
+Donchian Breakout (55/20): breaker: sell all, VIX filter: off, stop: none
+RSI-2 Mean Reversion: breaker: sell all, VIX filter: off, stop: none

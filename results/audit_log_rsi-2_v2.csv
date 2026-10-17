@@ -1,0 +1,167 @@
+date,rule,action,detail
+2013-02-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-02-15,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2013-02-18,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-02-18,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2013-02-19,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-02-19,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2013-02-20,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-02-20,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2013-02-21,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2013-02-21,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2013-03-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-03-07,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2013-03-08,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2013-03-21,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-04-10,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-05-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-07-01,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-08-22,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-12-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-01-08,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-01-13,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-01-20,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-02-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-02-05,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-02-06,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-02-07,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-02-10,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-04-01,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-04-02,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2014-04-03,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2014-04-03,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2014-04-04,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2014-04-04,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2014-04-07,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2014-04-07,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2014-04-07,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2014-04-09,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2014-04-09,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2014-04-09,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2014-05-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-05-08,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-05-09,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-05-12,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-05-13,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2014-12-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-03-30,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-05-08,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-05-14,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2015-05-15,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2015-08-27,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-11-20,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2016-02-12,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2016-12-01,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-01-24,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-10-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-12-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-12-26,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2018-02-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2018-02-26,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2018-03-05,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2018-03-06,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2018-03-28,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2018-10-15,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2018-10-23,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2019-01-31,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2019-08-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-03-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-03-11,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-12,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-13,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-16,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-23,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-09-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-02-04,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-03-04,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-03-12,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2021-04-05,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-04-12,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2021-11-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-11-23,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-11-29,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2021-11-30,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2021-12-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-12-07,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2021-12-08,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2021-12-09,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2021-12-10,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2021-12-13,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2021-12-21,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-02-24,daily_loss_limit,COOLDOWN,day P&L -2.42% breached -2%; no entries for 2 sessions
+2022-02-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-04-19,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-04-26,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2022-05-12,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-05-13,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2022-05-16,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2022-05-17,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2022-06-23,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-10-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-10-04,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2022-10-06,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2022-10-07,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2022-10-10,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2022-10-11,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2023-01-17,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-02-27,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-03-01,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2023-03-02,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2023-03-02,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-03-03,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2023-03-16,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-08-16,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-08-18,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2023-08-21,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2023-08-21,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2023-08-22,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2023-08-23,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2023-10-27,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2023-11-07,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-04-02,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-04-08,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2024-10-04,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-10-08,consec_loss_limit,BLOCKED ENTRY,SBIN.NS
+2024-10-09,consec_loss_limit,BLOCKED ENTRY,SBIN.NS
+2024-10-16,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-10-22,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2024-10-22,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2024-10-23,consec_loss_limit,BLOCKED ENTRY,ITC.NS
+2025-01-01,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-01-07,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2025-01-08,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2025-01-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-01-20,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2025-01-21,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2025-01-21,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2025-07-31,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-08-04,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2025-08-05,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2025-08-05,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2025-08-06,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2025-08-06,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2025-08-07,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2025-08-07,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
+2025-09-05,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-09-09,consec_loss_limit,BLOCKED ENTRY,LT.NS
+2025-09-09,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-09-10,consec_loss_limit,BLOCKED ENTRY,LT.NS
+2025-09-10,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-09-11,consec_loss_limit,BLOCKED ENTRY,LT.NS
+2025-09-11,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-09-12,consec_loss_limit,BLOCKED ENTRY,LT.NS
+2025-09-12,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-10-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-10-09,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-10-10,consec_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2025-11-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-01-30,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-02-02,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2026-02-03,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2026-02-04,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2026-02-05,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2026-03-13,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-05-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-05-18,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2026-05-19,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
+2026-05-20,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS

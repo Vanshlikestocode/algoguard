@@ -1,0 +1,253 @@
+date,rule,action,detail
+2012-09-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-05-23,daily_loss_limit,COOLDOWN,day P&L -2.22% breached -2%; no entries for 2 sessions
+2013-06-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-06-07,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-06-26,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-07-01,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-07-02,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-07-03,consec_loss_limit,BLOCKED ENTRY,RELIANCE.NS
+2013-11-12,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2013-12-31,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-01-02,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2014-01-03,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2014-01-06,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2014-01-07,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2014-01-30,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2014-02-04,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-01-06,daily_loss_limit,COOLDOWN,day P&L -2.15% breached -2%; no entries for 2 sessions
+2015-01-30,daily_loss_limit,COOLDOWN,day P&L -2.13% breached -2%; no entries for 2 sessions
+2015-02-02,daily_loss_limit,BLOCKED ENTRY,ITC.NS
+2015-03-09,daily_loss_limit,COOLDOWN,day P&L -2.24% breached -2%; no entries for 2 sessions
+2015-03-11,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-03-17,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2015-03-18,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2015-08-24,daily_loss_limit,COOLDOWN,day P&L -4.61% breached -2%; no entries for 2 sessions
+2015-09-24,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-09-28,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2015-09-29,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2015-09-30,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2015-10-01,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2015-10-05,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2015-10-05,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2015-11-10,max_drawdown,HALT + FLATTEN,"drawdown -15.1% breached -15%; all positions closed, halted 20 sessions"
+2015-11-13,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2015-11-16,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-16,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-16,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-16,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-17,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-17,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-17,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-17,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-18,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-18,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-18,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-18,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-19,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-19,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-19,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-19,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-20,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-20,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-20,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-20,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-20,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-11-23,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-23,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-23,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-23,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-23,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-11-24,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-24,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-24,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-24,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-24,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-11-26,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-26,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-26,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-26,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-26,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-11-27,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-27,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-27,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-27,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-27,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-11-30,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-11-30,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-11-30,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-11-30,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-11-30,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-01,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-01,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-01,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-12-01,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-01,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-02,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-02,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-02,max_drawdown,BLOCKED ENTRY,INFY.NS
+2015-12-02,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-02,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-03,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-03,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-03,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-03,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-04,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-04,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-04,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-04,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-07,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-07,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-07,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-07,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-08,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-08,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-08,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-08,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-09,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-09,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-09,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-09,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-10,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-10,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-10,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-10,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-11,max_drawdown,BLOCKED ENTRY,RELIANCE.NS
+2015-12-11,max_drawdown,BLOCKED ENTRY,HDFCBANK.NS
+2015-12-11,max_drawdown,BLOCKED ENTRY,ITC.NS
+2015-12-11,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2015-12-11,max_drawdown,RE-ARMED,"halt period over, trading resumes"
+2016-01-11,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2016-01-15,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2016-01-18,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2016-05-20,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2016-06-24,daily_loss_limit,COOLDOWN,day P&L -2.55% breached -2%; no entries for 2 sessions
+2016-08-29,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-07-07,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2017-07-12,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2017-07-13,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2017-07-14,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2018-02-02,daily_loss_limit,COOLDOWN,day P&L -2.17% breached -2%; no entries for 2 sessions
+2018-02-15,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2018-03-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2019-01-04,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2019-01-08,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2019-01-09,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2019-01-10,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2019-01-11,consec_loss_limit,BLOCKED ENTRY,INFY.NS
+2019-01-31,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2019-02-01,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2019-02-04,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2019-02-05,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2019-02-06,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2019-02-07,consec_loss_limit,BLOCKED ENTRY,TCS.NS
+2019-07-08,daily_loss_limit,COOLDOWN,day P&L -2.03% breached -2%; no entries for 2 sessions
+2019-12-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-02-28,daily_loss_limit,COOLDOWN,day P&L -2.75% breached -2%; no entries for 2 sessions
+2020-03-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-03-12,daily_loss_limit,COOLDOWN,day P&L -2.59% breached -2%; no entries for 2 sessions
+2020-03-13,max_drawdown,HALT + FLATTEN,"drawdown -15.4% breached -15%; all positions closed, halted 20 sessions"
+2020-03-17,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-17,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-18,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-18,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-19,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-19,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-20,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-20,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-23,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-23,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-24,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-24,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-25,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-26,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-26,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-27,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-27,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-30,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-03-30,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-03-31,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-01,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-03,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-07,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-08,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-09,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-13,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-15,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-04-15,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-16,max_drawdown,BLOCKED ENTRY,BHARTIARTL.NS
+2020-04-16,max_drawdown,BLOCKED ENTRY,HINDUNILVR.NS
+2020-04-16,max_drawdown,RE-ARMED,"halt period over, trading resumes"
+2020-09-15,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-09-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2020-12-21,daily_loss_limit,COOLDOWN,day P&L -2.55% breached -2%; no entries for 2 sessions
+2021-02-26,daily_loss_limit,COOLDOWN,day P&L -3.35% breached -2%; no entries for 2 sessions
+2021-04-12,daily_loss_limit,COOLDOWN,day P&L -2.83% breached -2%; no entries for 2 sessions
+2021-06-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2021-10-28,daily_loss_limit,COOLDOWN,day P&L -2.22% breached -2%; no entries for 2 sessions
+2021-11-26,daily_loss_limit,COOLDOWN,day P&L -2.47% breached -2%; no entries for 2 sessions
+2022-02-14,daily_loss_limit,COOLDOWN,day P&L -2.33% breached -2%; no entries for 2 sessions
+2022-02-24,daily_loss_limit,COOLDOWN,day P&L -3.46% breached -2%; no entries for 2 sessions
+2022-04-21,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-05-10,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-07-05,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2022-09-26,daily_loss_limit,COOLDOWN,day P&L -2.07% breached -2%; no entries for 2 sessions
+2023-01-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-01-23,daily_loss_limit,COOLDOWN,day P&L -2.08% breached -2%; no entries for 2 sessions
+2024-01-24,daily_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
+2024-01-24,daily_loss_limit,BLOCKED ENTRY,SBIN.NS
+2024-01-24,daily_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2024-01-25,daily_loss_limit,BLOCKED ENTRY,SBIN.NS
+2024-01-25,daily_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2024-02-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-05-10,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-06-04,daily_loss_limit,COOLDOWN,day P&L -7.24% breached -2%; no entries for 2 sessions
+2024-06-06,daily_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
+2024-08-05,daily_loss_limit,COOLDOWN,day P&L -2.48% breached -2%; no entries for 2 sessions
+2024-08-06,daily_loss_limit,BLOCKED ENTRY,TCS.NS
+2024-08-07,daily_loss_limit,BLOCKED ENTRY,TCS.NS
+2024-10-03,daily_loss_limit,COOLDOWN,day P&L -2.22% breached -2%; no entries for 2 sessions
+2025-01-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-01-21,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2025-06-19,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2025-07-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-01-27,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-02-13,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-02-18,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2026-02-19,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
+2026-03-17,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-07-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-07-13,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2026-07-14,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2026-07-15,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2026-07-16,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
+2026-09-09,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-09-15,max_drawdown,HALT + FLATTEN,"drawdown -15.1% breached -15%; all positions closed, halted 20 sessions"
+2026-09-16,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2026-09-17,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-17,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-18,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-18,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-21,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-21,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-22,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-22,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-23,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-23,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-24,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-24,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-25,max_drawdown,BLOCKED ENTRY,ICICIBANK.NS
+2026-09-25,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-28,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-29,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-09-30,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-01,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-05,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-06,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-07,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-08,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-09,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-12,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-13,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-14,max_drawdown,BLOCKED ENTRY,KOTAKBANK.NS
+2026-10-14,max_drawdown,RE-ARMED,"halt period over, trading resumes"
