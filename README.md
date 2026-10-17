@@ -2,6 +2,8 @@
 
 A rule-based algorithmic trading engine for NSE equities with an enforceable risk layer.
 
+**Live dashboard: https://algoguard.streamlit.app** (on the web, the commitment lock lasts for your browser session).
+
 Research question: **does a pre-committed, automatically enforced risk layer reduce tail risk (max drawdown, worst days, loss clusters) for common retail strategies, and what does it cost in returns?**
 
 This grows out of last semester's TradeGuardian idea. A third-party app cannot stop a person from placing a manual trade in their broker's app. But when an algorithm places the orders, the risk engine sits in the execution path, so enforcement is real. That is the pivot.

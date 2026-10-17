@@ -73,6 +73,8 @@ From 2022, Conservative also beat raw on drawdown for Donchian (-10.19 vs -10.52
 
 ## Before the review
 
+- Live dashboard: https://algoguard.streamlit.app (repo is public; Streamlit redeploys on every push to main). Open it a few minutes early in case it has gone to sleep.
+
 - Delete `rules_lock.json` (if it exists) so the dashboard starts unlocked.
 - On the Windows laptop: extract `algoguard_v3.zip` into `C:\Projects` (it contains the `algoguard` folder), then `python -m pytest -q tests`, `python run.py`, `streamlit run app.py`. No `--download` needed; data is included.
 - Rehearse the 2-minute demo on slide 16 (its speaker notes have the clicks).
