@@ -210,7 +210,7 @@ with t5:
     verdict = ("helps in both periods" if d_in > 0 and d_out > 0 else
                "helps only before 2022, so it may be fitted to the past" if d_in > 0 else
                "helps only from 2022" if d_out > 0 else "does not beat raw in either period")
-    st.markdown(f"**Guarded vs raw on Calmar:** {d_in:+.2f} before 2022, {d_out:+.2f} from 2022. These settings {verdict}.")
+    st.markdown(f"**Guarded vs raw on Calmar:** {d_in:+.2f} before 2022, {d_out:+.2f} from 2022. This setup {verdict}.")
 with t1:
     full = pd.DataFrame({"Raw": summarize(e_raw, raw.trades, raw.exposure.loc[sl]),
                          "Guarded": summarize(e_grd, grd.trades, grd.exposure.loc[sl])})
