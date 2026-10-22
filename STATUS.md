@@ -63,6 +63,18 @@ v2 beat v1 on all three and raw on return for EMA and Donchian, but drawdown sta
 
 From 2022, Conservative also beat raw on drawdown for Donchian (-10.19 vs -10.52) and RSI-2 (-7.66 vs -8.96). Mostly from holding less (57% vs 70% invested on EMA). Profiles were set by hand before testing.
 
+## Walk-forward (2015-2026, v2 re-picked every 1 January from earlier data only)
+
+| Strategy | No rules CAGR / DD | v1 | Walk-forward v2 |
+|---|---|---|---|
+| EMA | 6.88 / -16.84 | 5.66 / -23.56 | 7.00 / -18.17 |
+| Donchian | 2.90 / -14.13 | 2.59 / -14.75 | 2.96 / -13.65 |
+| RSI-2 | 0.25 / -10.26 | -0.45 / -10.52 | 0.08 / -10.83 |
+
+Beats v1 everywhere, roughly ties no rules; Donchian beats no rules on both. Details: results/report.md section 8.
+
+Dashboard also has a 3-question profile quiz (sidebar) and an "Explain a day" tab.
+
 ## Code changes in this version
 
 - `risk.py`: `dd_flatten` flag (False = breaker only blocks new entries, logged as "HALT").

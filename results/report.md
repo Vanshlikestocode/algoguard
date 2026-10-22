@@ -136,6 +136,22 @@ Chosen settings:
 
 Every candidate's in-sample score is in `7_v2_candidates_in_sample.csv`.
 
+## 8. Walk-forward (2015 to 2026)
+
+Every 1 January the v2 setting is re-picked from the same 16-setting menu using only data before that date, then used for that year. Every year is out-of-sample for the setting it uses. The setting picked each year is in `8_walk_forward_picks.csv`.
+
+| Strategy | layer | CAGR % | Sharpe | Max drawdown % | Days below -2% (count) | Calmar |
+|---|---|---|---|---|---|---|
+| EMA Crossover (20/100) | Raw | 6.88 | 0.08 | -16.84 | 24.00 | 0.41 |
+| EMA Crossover (20/100) | Guarded v1 | 5.66 | -0.03 | -23.56 | 18.00 | 0.24 |
+| EMA Crossover (20/100) | Walk-forward v2 | 7.00 | 0.09 | -18.17 | 22.00 | 0.39 |
+| Donchian Breakout (55/20) | Raw | 2.90 | -0.44 | -14.13 | 8.00 | 0.21 |
+| Donchian Breakout (55/20) | Guarded v1 | 2.59 | -0.50 | -14.75 | 5.00 | 0.18 |
+| Donchian Breakout (55/20) | Walk-forward v2 | 2.96 | -0.44 | -13.65 | 5.00 | 0.22 |
+| RSI-2 Mean Reversion | Raw | 0.25 | -1.63 | -10.26 | 1.00 | 0.02 |
+| RSI-2 Mean Reversion | Guarded v1 | -0.45 | -1.80 | -10.52 | 1.00 | -0.04 |
+| RSI-2 Mean Reversion | Walk-forward v2 | 0.08 | -1.57 | -10.83 | 1.00 | 0.01 |
+
 ## Limitations
 
 - Survivorship bias: the universe is today's large caps, tested back to 2012.
