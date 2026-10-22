@@ -1,49 +1,49 @@
 Strategy,Setting,Changes vs v1,IS CAGR %,IS Max DD %,IS Calmar
-EMA Crossover (20/100),"breaker: sell all, VIX filter: off, stop: none",2,9.828547278235789,-16.705175129918594,0.5883534414813216
+EMA Crossover (20/100),"breaker: sell all, VIX filter: off, stop: none",2,9.82854727823581,-16.70517512991857,0.5883534414813237
 EMA Crossover (20/100),"breaker: sell all, VIX filter: off, stop: 5x ATR",2,9.490946409664524,-16.699858524134225,0.5683249589179717
 EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: none",3,9.776516106553967,-17.57808352352943,0.556176450832507
 EMA Crossover (20/100),"breaker: sell all, VIX filter: off, stop: 4x ATR",2,9.295092222430966,-16.716314039801183,0.5560491505663002
 EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: 5x ATR",3,9.262625945622617,-17.462902845115234,0.5304173096406809
-EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 5x ATR",1,9.251290747863127,-17.658111929664667,0.5239116608113387
-EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: 3x ATR",2,9.450409383539693,-18.256420234197623,0.5176485456791438
+EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 5x ATR",1,9.251290747863127,-17.658111929664678,0.5239116608113383
+EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: 3x ATR",2,9.450409383539693,-18.256420234197613,0.5176485456791441
 EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: none",1,9.40140906016178,-18.16932124422077,0.5174331464447053
-EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,9.049337469673668,-17.622755267923964,0.5135029870241011
-EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 4x ATR",1,9.041418917503496,-18.235691038323985,0.49580895500489236
-EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: 5x ATR",2,9.110609843762507,-18.465982037660623,0.4933726148537233
+EMA Crossover (20/100),"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,9.049337469673691,-17.62275526792394,0.513502987024103
+EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 4x ATR",1,9.041418917503496,-18.235691038323964,0.49580895500489297
+EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: 5x ATR",2,9.110609843762507,-18.465982037660634,0.493372614853723
 EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: none",2,9.022572728837929,-18.596953679145823,0.4851640158116663
-EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,8.952211077971196,-18.611323006940783,0.48100885007651617
+EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,8.952211077971196,-18.61132300694076,0.4810088500765167
 EMA Crossover (20/100),"breaker: block entries only, VIX filter: on, stop: 3x ATR",1,8.985856046794428,-19.213117106021382,0.4676938154912023
 EMA Crossover (20/100),"breaker: sell all, VIX filter: off, stop: 3x ATR",1,8.784096588988334,-21.759276979225362,0.40369432299496605
-EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 3x ATR",0,8.362596871943495,-23.555598825928413,0.3550152527958029
-Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: none",2,5.042109366406589,-13.644460088534826,0.36953527905756967
-Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: none",3,5.042109366406589,-13.644460088534826,0.36953527905756967
+EMA Crossover (20/100),"breaker: sell all, VIX filter: on, stop: 3x ATR",0,8.362596871943495,-23.555598825928392,0.35501525279580326
+Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: none",2,5.042109366406589,-13.64446008853486,0.3695352790575687
+Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: none",3,5.042109366406589,-13.64446008853486,0.3695352790575687
 Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: none",1,4.904636648212923,-13.658657513078175,0.3590862896676873
 Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: none",2,4.904636648212923,-13.658657513078175,0.3590862896676873
 Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: 5x ATR",2,4.5841748791738635,-13.96728788365208,0.3282079468369361
 Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: 5x ATR",3,4.5841748791738635,-13.96728788365208,0.3282079468369361
 Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: 5x ATR",1,4.424910008286909,-13.960977967708377,0.3169484271461274
 Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: 5x ATR",2,4.424910008286909,-13.960977967708377,0.3169484271461274
-Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: 4x ATR",2,4.123928086629691,-13.511067177911528,0.30522593310554075
-Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,4.123928086629691,-13.511067177911528,0.30522593310554075
-Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: 4x ATR",1,4.019521342628596,-13.50429621264192,0.2976475989075061
-Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,4.019521342628596,-13.50429621264192,0.2976475989075061
-Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: 3x ATR",1,4.059690036329822,-14.788772054619969,0.274511637702982
-Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: 3x ATR",2,4.059690036329822,-14.788772054619969,0.274511637702982
-Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: 3x ATR",0,3.8718617251340737,-14.75419252679272,0.2624245087017136
-Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: 3x ATR",1,3.8718617251340737,-14.75419252679272,0.2624245087017136
-RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: none",2,0.07607183670090834,-10.728503076352979,0.007090629154833407
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: none",3,0.07607183670090834,-10.728503076352979,0.007090629154833407
-RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: 5x ATR",2,0.06038091028930381,-10.344715388364412,0.005836884633599432
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: 5x ATR",3,0.06038091028930381,-10.344715388364412,0.005836884633599432
-RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: 4x ATR",2,-0.1673825658788597,-11.207121973576506,-0.014935374690621239
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,-0.1673825658788597,-11.207121973576506,-0.014935374690621239
+Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: 4x ATR",2,4.123928086629691,-13.51106717791154,0.30522593310554047
+Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,4.123928086629691,-13.51106717791154,0.30522593310554047
+Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: 4x ATR",1,4.019521342628574,-13.504296212641954,0.2976475989075037
+Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,4.019521342628574,-13.504296212641954,0.2976475989075037
+Donchian Breakout (55/20),"breaker: sell all, VIX filter: off, stop: 3x ATR",1,4.059690036329822,-14.788772054619981,0.27451163770298176
+Donchian Breakout (55/20),"breaker: block entries only, VIX filter: off, stop: 3x ATR",2,4.059690036329822,-14.788772054619981,0.27451163770298176
+Donchian Breakout (55/20),"breaker: sell all, VIX filter: on, stop: 3x ATR",0,3.8718617251340737,-14.754192526792732,0.2624245087017134
+Donchian Breakout (55/20),"breaker: block entries only, VIX filter: on, stop: 3x ATR",1,3.8718617251340737,-14.754192526792732,0.2624245087017134
+RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: none",2,0.07607183670090834,-10.728503076353025,0.007090629154833377
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: none",3,0.07607183670090834,-10.728503076353025,0.007090629154833377
+RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: 5x ATR",2,0.06038091028930381,-10.344715388364467,0.005836884633599401
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: 5x ATR",3,0.06038091028930381,-10.344715388364467,0.005836884633599401
+RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: 4x ATR",2,-0.1673825658788597,-11.207121973576461,-0.014935374690621298
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: 4x ATR",3,-0.1673825658788597,-11.207121973576461,-0.014935374690621298
 RSI-2 Mean Reversion,"breaker: sell all, VIX filter: off, stop: 3x ATR",1,-0.30907415487028134,-14.431130859583853,-0.02141718191579021
 RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: off, stop: 3x ATR",2,-0.30907415487028134,-14.431130859583853,-0.02141718191579021
 RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: none",1,-0.3070514355675291,-12.106318466256717,-0.025362907511755694
 RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: none",2,-0.3070514355675291,-12.106318466256717,-0.025362907511755694
-RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: 5x ATR",1,-0.3249052906980743,-11.97706221252215,-0.027127294234005252
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 5x ATR",2,-0.3249052906980743,-11.97706221252215,-0.027127294234005252
-RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: 4x ATR",1,-0.49708170706255217,-13.43124470867243,-0.037009355264117194
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,-0.49708170706255217,-13.43124470867243,-0.037009355264117194
-RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 3x ATR",1,-0.6233983885913896,-16.439548381859503,-0.037920651718102494
+RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: 5x ATR",1,-0.3249052906980854,-11.977062212522183,-0.027127294234006102
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 5x ATR",2,-0.3249052906980854,-11.977062212522183,-0.027127294234006102
+RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: 4x ATR",1,-0.49708170706255217,-13.431244708672452,-0.03700935526411713
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 4x ATR",2,-0.49708170706255217,-13.431244708672452,-0.03700935526411713
+RSI-2 Mean Reversion,"breaker: block entries only, VIX filter: on, stop: 3x ATR",1,-0.6233983885913896,-16.43954838185948,-0.03792065171810254
 RSI-2 Mean Reversion,"breaker: sell all, VIX filter: on, stop: 3x ATR",0,-0.6416137384291698,-16.598785748184362,-0.03865425749587447

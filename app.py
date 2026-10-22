@@ -16,6 +16,7 @@ from algoguard import data
 from algoguard.backtest import run_backtest
 from algoguard.metrics import drawdown, summarize
 from algoguard import commitment
+from algoguard.explain import explain_day
 from algoguard.risk import GUARDED, PROFILES, RAW, RULE_LABELS
 from algoguard.strategies import STRATEGIES, build_signals
 
@@ -63,6 +64,17 @@ with st.sidebar:
     cost = st.slider("Cost per side (%)", 0.0, 0.5, 0.15, 0.01) / 100
 
     st.subheader("Guardrails")
+    with st.expander("Not sure? Which profile suits me (3 questions)"):
+        q1 = st.radio("Your money falls 5% in one week. You...", ["Sell everything", "Wait and watch", "Buy more"], index=None)
+        q2 = st.radio("The biggest yearly fall you could live with", ["About 10%", "About 20%", "30% or more"], index=None)
+        q3 = st.radio("What matters more to you?", ["Not losing money", "A balance of both", "The highest return"], index=None)
+        answers = [q for q in (q1, q2, q3) if q is not None]
+        if len(answers) == 3:
+            score = sum(opts.index(q) for q, opts in zip(
+                answers, (["Sell everything", "Wait and watch", "Buy more"], ["About 10%", "About 20%", "30% or more"],
+                          ["Not losing money", "A balance of both", "The highest return"])))
+            pick = "Conservative" if score <= 2 else "Balanced (v1 defaults)" if score <= 4 else "Aggressive"
+            st.success(f"Suggested: **{pick}**. Pick it under *Start from* below.")
     v2_file = Path(__file__).resolve().parent / "results" / "7_v2_chosen_settings.json"
     v2_sets = json.loads(v2_file.read_text())["settings"] if v2_file.exists() else {}
     saved = None if demo else load_lock()
@@ -192,7 +204,14 @@ fig.update_layout(height=560, margin=dict(l=10, r=10, t=10, b=10), legend=dict(o
                   hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
-t1, t5, t2, t3, t4 = st.tabs(["Full metrics", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
+t1, t6, t5, t2, t3, t4 = st.tabs(["Full metrics", "Explain a day", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
+with t6:
+    covid = pd.Timestamp("2020-02-28")
+    pick_day = st.date_input("Pick a date", value=covid.date() if dates[0] <= covid <= dates[-1] else dates[-1].date(),
+                             min_value=dates[0].date(), max_value=dates[-1].date())
+    st.caption("What the guarded robot did that day, and why, in plain words.")
+    for line in explain_day(grd, pick_day, vix):
+        st.markdown(f"- {line}")
 with t5:
     split = pd.Timestamp("2022-01-01")
     rows = {}

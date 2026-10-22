@@ -298,6 +298,28 @@ def main():
     fig.savefig(out / "chart_4_v2_drawdown.png")
     plt.close(fig)
 
+    # ---------------- 8. Walk-forward: re-pick v2 every year ---------------------------
+    first = max(dates[0].year + 3, split.year - 7)  # at least 3 years of history before the first pick
+    print(f"\nWalk-forward: re-picking v2 each year, {first} to {dates[-1].year} ...")
+    rows, picks = {}, []
+    for name in STRATEGIES:
+        eq, pk = v2.walk_forward(prices, signals[name], vix, first, dates[-1].year)
+        pk.insert(0, "Strategy", name)
+        picks.append(pk)
+        st0 = eq.index[0]
+        for lab, e in (("Raw", results[(name, "Raw")].equity.loc[st0:]),
+                       ("Guarded v1", results[(name, "Guarded")].equity.loc[st0:]), ("Walk-forward v2", eq)):
+            rows[f"{name} | {lab}"] = summarize(e / e.iloc[0] * 1e6)
+    wf = pd.DataFrame(rows).T[["CAGR %", "Sharpe", "Max drawdown %", "Days below -2% (count)", "Calmar"]]
+    wf.index.name = "Strategy | layer"
+    wf.to_csv(out / "8_walk_forward.csv")
+    pd.concat(picks).to_csv(out / "8_walk_forward_picks.csv", index=False)
+    report += [f"## 8. Walk-forward ({first} to {dates[-1].year})\n",
+               "Every 1 January the v2 setting is re-picked from the same 16-setting menu using only data before that "
+               "date, then used for that year. Every year is out-of-sample for the setting it uses. The setting picked "
+               "each year is in `8_walk_forward_picks.csv`.\n", md_table(wf), ""]
+    print(wf.round(2).to_string())
+
     report += ["## Limitations\n",
                "- Survivorship bias: the universe is today's large caps, tested back to 2012.\n"
                "- Daily bars: the daily-loss rule acts at the next open, not intraday. Intraday enforcement needs tick or minute data.\n"

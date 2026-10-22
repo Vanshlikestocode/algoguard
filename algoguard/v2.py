@@ -62,3 +62,20 @@ def select(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, split: pd
                      "IS CAGR %": m["CAGR %"], "IS Max DD %": m["Max drawdown %"], "IS Calmar": m["Calmar"]})
     tbl = pd.DataFrame(rows).sort_values(["IS Calmar", "Changes vs v1"], ascending=[False, True])
     return tbl.iloc[0]["config"], tbl.drop(columns="config").reset_index(drop=True)
+
+
+def walk_forward(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, first_year: int, last_year: int):
+    """Re-pick the v2 setting every 1 January using only data before it, trade that year with it,
+    and stitch the years into one curve. Every year is out-of-sample for the setting it uses.
+
+    Returns (equity curve starting at 1.0, table of the setting chosen each year)."""
+    rets, picks = [], []
+    for year in range(first_year, last_year + 1):
+        start, end = pd.Timestamp(f"{year}-01-01"), pd.Timestamp(f"{year}-12-31")
+        cfg, _ = select(prices, signals, vix, start)
+        # the engine keeps running across years; only the settings switch on 1 January
+        eq = run_backtest(prices, signals, vix, cfg).equity
+        rets.append(eq.pct_change().loc[start:end])
+        picks.append({"Year": year, "Setting chosen on data before it": describe(cfg)})
+    r = pd.concat(rets).fillna(0)
+    return (1 + r).cumprod(), pd.DataFrame(picks)
