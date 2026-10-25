@@ -17,6 +17,7 @@ from algoguard.backtest import run_backtest
 from algoguard.metrics import drawdown, summarize
 from algoguard import commitment
 from algoguard.explain import explain_day
+from algoguard.scanner import scan
 from algoguard.risk import GUARDED, PROFILES, RAW, RULE_LABELS
 from algoguard.strategies import STRATEGIES, build_signals
 
@@ -204,7 +205,28 @@ fig.update_layout(height=560, margin=dict(l=10, r=10, t=10, b=10), legend=dict(o
                   hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
-t1, t6, t5, t2, t3, t4 = st.tabs(["Full metrics", "Explain a day", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
+t1, t6, t7, t5, t2, t3, t4 = st.tabs(["Full metrics", "Explain a day", "Volatility scanner", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
+with t7:
+    st.caption("India VIX measures the whole market. This scans each stock: which ones got calmer while VIX went up? "
+               "Volatility = how much the stock moved over the last 20 trading days (yearly %).")
+    c1, c2 = st.columns(2)
+    scan_day = c1.date_input("Scan date", value=dates[-1].date(), min_value=dates[60].date(), max_value=dates[-1].date())
+    look = c2.slider("Compare with how many trading days earlier", 5, 30, 10)
+    if vix is None:
+        st.info("India VIX data is missing, so the scanner cannot compare with the market.")
+    else:
+        stbl, vchg = scan(prices, vix, scan_day, look)
+        calmer = stbl[stbl["Calmer while VIX rose"]].Stock.tolist()
+        st.metric(f"India VIX change over {look} trading days", f"{vchg:+.1f}%")
+        if vchg <= 0:
+            st.write("VIX did not rise over this period, so no stock is flagged.")
+        elif calmer:
+            st.success(f"Calmer while VIX rose: **{', '.join(calmer)}**")
+        else:
+            st.write("VIX rose and every stock got more volatile.")
+        st.dataframe(stbl.style.format({c: "{:.1f}" for c in ["Volatility now %", "Volatility before %", "Change %"]}),
+                     use_container_width=True, hide_index=True)
+        st.caption("A screen, not a buy signal: a stock can look calmer because an old wild patch left the 20-day window.")
 with t6:
     covid = pd.Timestamp("2020-02-28")
     pick_day = st.date_input("Pick a date", value=covid.date() if dates[0] <= covid <= dates[-1] else dates[-1].date(),
