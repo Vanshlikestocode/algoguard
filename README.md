@@ -63,3 +63,24 @@ Survivorship bias (today's large caps), daily bars only, unofficial Yahoo data, 
 ## Review deck
 
 Slides with speaker notes: https://claude.ai/artifact/LHhVegAECfkwGsvkkiif7y (private; ask Vansh for access). Current state and results: `STATUS.md`.
+
+## Extension: volatility-aware NIFTY 50 stock selection (academic research prototype, not investment advice)
+
+When NIFTY volatility is expected to rise, which NIFTY 50 stocks hold up? A walk-forward study (2016–2026, hold-out 2022+):
+
+| Module | Purpose |
+|---|---|
+| `algoguard/universe.py` | All 50 current NIFTY 50 stocks (NSE list with sectors), NIFTY and India VIX, cached in `data/nifty50/` |
+| `algoguard/regime.py` | Probability of high volatility over the next 10 days (VIX, realised vol, GARCH(1,1)); calm / rising / high; accuracy vs a naive baseline |
+| `algoguard/features.py` | 19 per-stock features: beta, downside beta, past high-vol excess return, sector, relative strength, liquidity, RSI, MACD, ADX, %B, ATR, OBV, stochastic, MA distance, momentum, volatility |
+| `algoguard/selection.py` | Logistic regression (and gradient boosting) per regime; feature importance; information coefficients |
+| `algoguard/portfolio.py` | Weekly top-10, inverse-vol weights; drawdown trigger that re-evaluates and switches approach, never goes to cash |
+| `run_vs.py` | Runs everything, writes `results/vs/` (tables, 5 charts, audit log, report.md, current ranking) |
+| `pages/2_Volatility_Selection.py` | Dashboard page: current regime, ranked stocks with reasons, equity vs benchmarks, drawdown, audit log |
+
+```
+python run_vs.py --download   # first time
+python run_vs.py
+```
+
+Headline (walk-forward 2016–2026): the regime switch beat NIFTY buy and hold (18.0% vs 10.4% CAGR) and lost far less in the COVID crash (−7.2% vs −18.6%), but did not beat an equal-weight NIFTY 50 (20.3%), mostly because of survivorship bias and ~35×/yr turnover. Full results and automatic overfitting flags: `results/vs/report.md`.

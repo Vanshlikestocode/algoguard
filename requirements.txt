@@ -5,3 +5,5 @@ yfinance>=0.2.40
 streamlit>=1.35
 plotly>=5.20
 pytest>=8.0
+arch>=7.0
+scikit-learn>=1.4
