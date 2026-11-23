@@ -142,8 +142,8 @@ tests = Counter(x.split("::")[0].split("/")[-1] for x in collected if "::" in x)
 n_tests = sum(tests.values())
 result_files = sorted(R.glob("*.csv")) + sorted(R.glob("*.json")) + sorted(V.glob("*.csv")) + sorted(V.glob("*.json"))
 n_data = len(list((ROOT / "data").rglob("*.csv")))
-code_files = sorted((ROOT / "algoguard").glob("*.py")) + [ROOT / f for f in ("run.py", "run_vs.py", "verify.py", "live_update.py", "paper_trade.py", "app.py")] \
-    + sorted((ROOT / "pages").glob("*.py"))
+code_files = sorted((ROOT / "algoguard").glob("*.py")) + [ROOT / f for f in ("run.py", "run_vs.py", "verify.py", "live_update.py", "paper_trade.py", "app.py", "volselect_app.py")] \
+    + sorted((ROOT / "views").glob("*.py"))
 total_lines = sum(lines(p) for p in code_files) + sum(lines(p) for p in (ROOT / "tests").glob("*.py"))
 
 
@@ -182,11 +182,14 @@ DESC = {
     "run_vs.py": "VolSelect walk-forward study → results/vs/",
     "verify.py": "Independent re-run check (section 2)",
     "paper_trade.py": "Paper replay through the broker layer (order path only)",
-    "app.py": "Streamlit dashboard, main page",
+    "app.py": "Entry point of the AlgoGuard site",
     "live.py": "Live mode: forward paper-trading record (append-only ledger), plan for the next open, VolSelect snapshot",
     "live_update.py": "Daily live update after the NSE close (run by GitHub Actions at 18:00 IST); writes live/ only",
-    "3_Live_Market.py": "Streamlit dashboard, live page: self-refreshing delayed quotes, forward record, next-open plan",
-    "2_Volatility_Selection.py": "Streamlit dashboard, VolSelect page",
+    "live_market.py": "VolSelect site, live page: self-refreshing delayed quotes, forward record, next-open plan",
+    "volatility_selection.py": "VolSelect site, study page: regime, ranking, equity vs benchmarks, audit log",
+    "algoguard_dashboard.py": "AlgoGuard site: profiles, rule toggles, commitment lock, explain-a-day, scanner, audit log",
+    "volselect_app.py": "Entry point of the VolSelect site (live market + volatility selection)",
+    "sites.py": "Addresses of the two public dashboards",
     "__init__.py": "Package marker",
 }
 TEST_DESC = {
@@ -196,7 +199,7 @@ TEST_DESC = {
     "test_explain.py": "Cooldown day, blocked entry, quiet and closed days explained correctly",
     "test_scanner.py": "Flags a stock that calms while VIX rises; flags nothing when VIX falls",
     "test_trade_stats.py": "Win/loss counts, profit factor, losing streak, holding period, calendar returns on a hand-checked example",
-    "test_dashboard.py": "All three dashboard pages render on the bundled data without an exception (live page offline)",
+    "test_dashboard.py": "Both sites and all three pages render on the bundled data without an exception (live page offline)",
     "test_live.py": "Live mode: flat until the record starts; ledger is append-only and never rewrites a stored day; VIX block shows in the plan; today's bar ignored until final",
 }
 claim(set(tests) <= set(TEST_DESC), "every test file is described")
@@ -403,7 +406,8 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
  ["<code>python run_vs.py</code>", "VolSelect walk-forward study, writes <code>results/vs/</code>"],
  ["<code>python report/build_report.py</code>", "Rebuilds this report from the result files and checks its claims"],
  ["<code>python paper_trade.py --days 60</code>", "Day-by-day paper replay through the broker layer"],
- ["<code>streamlit run app.py</code>", "Interactive dashboard (also live at algoguard.streamlit.app)"],
+ ["<code>streamlit run volselect_app.py</code>", "VolSelect site: live market and volatility selection (live at volselect.streamlit.app)"],
+ ["<code>streamlit run app.py</code>", "AlgoGuard site: the risk-layer dashboard (live at algoguard.streamlit.app)"],
 ])}
 </div>
 
@@ -543,7 +547,7 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
 <h3>Roadmap to a pilot</h3>
 {table(["Step", "Deliverable", "Proves"], [
  ["1. Intraday enforcement", "Minute data; daily loss limit and stops act intraday, not at the next open", "Rules work at the speed users lose money"],
- ["2. Live paper record (started)", f"Running since the close of {LIVE_START}: every trading day at 18:00 IST a scheduled job re-runs the engine on fresh prices and commits the day to an append-only ledger; Live Market page in the dashboard", "Backtest behaviour holds live, with a timestamped record"],
+ ["2. Live paper record (started)", f"Running since the close of {LIVE_START}: every trading day at 18:00 IST a scheduled job re-runs the engine on fresh prices and commits the day to an append-only ledger; Live market page at volselect.streamlit.app", "Backtest behaviour holds live, with a timestamped record"],
  ["3. F&amp;O support", "Margin-aware sizing and loss limits for futures and options", "Covers where SEBI found the losses"],
  ["4. Broker pilot", "Integration with one broker's API sandbox, as its empanelled agent", "A paying customer and the compliance path"],
  ["5. VolSelect research", "Point-in-time members; look for an out-of-sample gross edge before anything else", "Whether selection adds anything"],
@@ -583,7 +587,7 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
 <h3>Files in this submission</h3>
 {table(["Path", "Contents"], [
  ["<code>AlgoGuard_VolSelect_Review_Report.pdf</code>", "This report"],
- ["<code>algoguard/</code>, <code>run.py</code>, <code>run_vs.py</code>, <code>paper_trade.py</code>, <code>app.py</code>, <code>pages/</code>", "All Python code"],
+ ["<code>algoguard/</code>, <code>run.py</code>, <code>run_vs.py</code>, <code>paper_trade.py</code>, <code>app.py</code>, <code>volselect_app.py</code>, <code>views/</code>", "All Python code"],
  ["<code>verify.py</code>, <code>requirements.txt</code>, <code>data/MANIFEST.sha256</code>, <code>verify_report.txt</code>", "Reproduction kit, and our own verifier output"],
  [f"<code>tests/</code>", f"{n_tests} unit tests"],
  [f"<code>data/</code>", f"The exact price data used ({n_data} CSV files)"],

@@ -6,4 +6,4 @@ call conda activate algoguard
 pip install -r requirements.txt
 python verify.py
 python paper_trade.py --days 60
-streamlit run app.py
+streamlit run volselect_app.py
