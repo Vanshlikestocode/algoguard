@@ -3,7 +3,7 @@
 A rule-based algorithmic trading engine for NSE equities with an enforceable risk layer.
 
 **Two live dashboards from this repository:**
-- **https://volselect.streamlit.app** (`volselect_app.py`): live market with the forward paper-trading record, and the volatility-aware NIFTY 50 selection study.
+- **https://volselect.streamlit.app** (`volselect_app.py`): VolSelect, a NIFTY volatility and risk monitor: overview, live market with the forward paper-trading record, and the walk-forward research.
 - **https://algoguard.streamlit.app** (`app.py`): the AlgoGuard risk-layer dashboard (on the web, the commitment lock lasts for your browser session).
 
 Research question: **does a pre-committed, automatically enforced risk layer reduce tail risk (max drawdown, worst days, loss clusters) for common retail strategies, and what does it cost in returns?**
@@ -17,7 +17,7 @@ pip install -r requirements.txt
 python verify.py
 ```
 
-`verify.py` checks the 67 bundled data files against `data/MANIFEST.sha256`, runs the 39 unit tests, re-runs both studies into a temporary folder and compares all 45 result files cell by cell with `results/`. Expected last line: `VERDICT: ALL RESULTS REPRODUCED` (about 90 seconds, offline). Do not run `--download` first: Yahoo revises adjusted prices over time, so fresh data moves the numbers slightly (a data difference, which the manifest check reports). Full write-up: `AlgoGuard_VolSelect_Review_Report.pdf` (architecture, results, win/loss, commercial viability).
+`verify.py` checks the 67 bundled data files against `data/MANIFEST.sha256`, runs the 40 unit tests, re-runs both studies into a temporary folder and compares all 45 result files cell by cell with `results/`. Expected last line: `VERDICT: ALL RESULTS REPRODUCED` (about 90 seconds, offline). Do not run `--download` first: Yahoo revises adjusted prices over time, so fresh data moves the numbers slightly (a data difference, which the manifest check reports). Full write-up: `AlgoGuard_VolSelect_Review_Report.pdf` (architecture, results, win/loss, commercial viability).
 
 ## Run it (Windows, Anaconda/Miniconda Prompt)
 
@@ -26,10 +26,10 @@ cd algoguard
 conda create -n algoguard python=3.11 -y
 conda activate algoguard
 pip install -r requirements.txt
-python -m pytest -q tests          # 39 tests incl. no look-ahead, the commitment lock and the dashboard
+python -m pytest -q tests          # 40 tests incl. no look-ahead, the commitment lock and the dashboard
 python run.py                      # all experiments -> results\
 python paper_trade.py --days 60    # paper-trading replay through the broker layer
-streamlit run volselect_app.py     # site 1: live market + volatility selection
+streamlit run volselect_app.py     # site 1: VolSelect (overview, live market, research)
 streamlit run app.py               # site 2: AlgoGuard risk-layer dashboard
 ```
 
@@ -55,7 +55,7 @@ Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 | `verify.py` | Independent re-run check: data manifest, tests, both studies, every result table compared |
 | `app.py`, `views/algoguard_dashboard.py` | AlgoGuard site: start from a risk profile (Conservative / Balanced / Aggressive) or v2, toggle each rule, commitment lock, before-vs-after-2022 check, explain-a-day, volatility scanner, 3-question profile quiz, audit log |
 | `paper_trade.py` | Day-by-day replay through the broker layer |
-| `tests/` | 39 tests: no look-ahead (engine, features, regime forecast, portfolio), rules fire, costs bite, no leverage, rate limiter, MPP pricing, commitment lock, trade statistics, both dashboard pages render |
+| `tests/` | 40 tests: no look-ahead (engine, features, regime forecast, portfolio), rules fire, costs bite, no leverage, rate limiter, MPP pricing, commitment lock, trade statistics, both dashboard pages render |
 
 ## Outputs (`results/`)
 
@@ -98,7 +98,7 @@ When NIFTY volatility is expected to rise, which NIFTY 50 stocks hold up? A walk
 | `algoguard/selection.py` | Logistic regression (and gradient boosting) per regime; feature importance; information coefficients |
 | `algoguard/portfolio.py` | Weekly top-10, inverse-vol weights; drawdown trigger that re-evaluates and switches approach, never goes to cash |
 | `run_vs.py` | Runs everything, writes `results/vs/` (tables, 5 charts, audit log, report.md, current ranking) |
-| `views/volatility_selection.py` | VolSelect site page: current regime, ranked stocks with reasons, equity vs benchmarks, drawdown, audit log |
+| `volselect_app.py`, `views/overview.py`, `views/live_market.py`, `views/research.py` | VolSelect site: landing page, live market, walk-forward research (equity vs benchmarks, win/loss, costs, forecast accuracy, audit log) |
 
 ```
 python run_vs.py --download   # first time

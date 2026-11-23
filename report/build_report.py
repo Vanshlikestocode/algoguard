@@ -186,9 +186,11 @@ DESC = {
     "live.py": "Live mode: forward paper-trading record (append-only ledger), plan for the next open, VolSelect snapshot",
     "live_update.py": "Daily live update after the NSE close (run by GitHub Actions at 18:00 IST); writes live/ only",
     "live_market.py": "VolSelect site, live page: self-refreshing delayed quotes, forward record, next-open plan",
-    "volatility_selection.py": "VolSelect site, study page: regime, ranking, equity vs benchmarks, audit log",
+    "overview.py": "VolSelect site, landing page: market state today, what it does, why to trust it, honest evidence",
+    "research.py": "VolSelect site, research page: walk-forward evidence, win/loss, costs, forecast accuracy, audit log",
+    "_ui.py": "Shared helpers for the VolSelect pages",
     "algoguard_dashboard.py": "AlgoGuard site: profiles, rule toggles, commitment lock, explain-a-day, scanner, audit log",
-    "volselect_app.py": "Entry point of the VolSelect site (live market + volatility selection)",
+    "volselect_app.py": "Entry point of the VolSelect site (overview, live market, research)",
     "sites.py": "Addresses of the two public dashboards",
     "__init__.py": "Package marker",
 }
@@ -199,7 +201,7 @@ TEST_DESC = {
     "test_explain.py": "Cooldown day, blocked entry, quiet and closed days explained correctly",
     "test_scanner.py": "Flags a stock that calms while VIX rises; flags nothing when VIX falls",
     "test_trade_stats.py": "Win/loss counts, profit factor, losing streak, holding period, calendar returns on a hand-checked example",
-    "test_dashboard.py": "Both sites and all three pages render on the bundled data without an exception (live page offline)",
+    "test_dashboard.py": "Both sites and all four pages render on the bundled data without an exception (live page offline)",
     "test_live.py": "Live mode: flat until the record starts; ledger is append-only and never rewrites a stored day; VIX block shows in the plan; today's bar ignored until final",
 }
 claim(set(tests) <= set(TEST_DESC), "every test file is described")
@@ -406,7 +408,7 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
  ["<code>python run_vs.py</code>", "VolSelect walk-forward study, writes <code>results/vs/</code>"],
  ["<code>python report/build_report.py</code>", "Rebuilds this report from the result files and checks its claims"],
  ["<code>python paper_trade.py --days 60</code>", "Day-by-day paper replay through the broker layer"],
- ["<code>streamlit run volselect_app.py</code>", "VolSelect site: live market and volatility selection (live at volselect.streamlit.app)"],
+ ["<code>streamlit run volselect_app.py</code>", "VolSelect site: overview, live market and research (live at volselect.streamlit.app)"],
  ["<code>streamlit run app.py</code>", "AlgoGuard site: the risk-layer dashboard (live at algoguard.streamlit.app)"],
 ])}
 </div>

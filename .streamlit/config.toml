@@ -1,0 +1,9 @@
+# Shared theme for both sites (app.py and volselect_app.py): the same teal as the report and charts.
+[theme.light]
+primaryColor = "#1F6F8B"
+
+[theme.dark]
+primaryColor = "#4FA3C0"
+
+[client]
+toolbarMode = "viewer"

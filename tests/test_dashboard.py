@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 @pytest.mark.parametrize("page", ["app.py", "volselect_app.py", "views/algoguard_dashboard.py",
-                                  "views/volatility_selection.py", "views/live_market.py"])
+                                  "views/overview.py", "views/research.py", "views/live_market.py"])
 def test_page_renders(page, monkeypatch):
     monkeypatch.chdir(ROOT)
     at = st_testing.AppTest.from_file(str(ROOT / page), default_timeout=180).run()
