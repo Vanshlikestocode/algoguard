@@ -25,11 +25,12 @@ def constituents() -> pd.DataFrame:
     return df[["ticker", "Company Name", "Industry", "defensive"]]
 
 
-def download(start="2012-01-01", force=False):
+def download(start="2012-01-01", force=False, folder=None):
     import yfinance as yf
-    DIR.mkdir(parents=True, exist_ok=True)
+    folder = Path(folder or DIR)
+    folder.mkdir(parents=True, exist_ok=True)
     for t in list(constituents().ticker) + [data.INDEX_TICKER, data.VIX_TICKER]:
-        path = DIR / f"{t.replace('^', 'IDX_')}.csv"
+        path = folder / f"{t.replace('^', 'IDX_')}.csv"
         if path.exists() and not force:
             continue
         raw = yf.download(t, start=start, auto_adjust=True, progress=False)
@@ -40,13 +41,14 @@ def download(start="2012-01-01", force=False):
         print(f"  saved   {t} ({len(raw)} rows)")
 
 
-def load():
+def load(folder=None):
     """Return (prices dict of OHLCV frames on their own dates, NIFTY frame, VIX close series)."""
+    folder = Path(folder or DIR)
     prices = {}
     for t in constituents().ticker:
-        df = data.read_csv(DIR / f"{t}.csv")
+        df = data.read_csv(folder / f"{t}.csv")
         if df is not None and {"open", "high", "low", "close", "volume"} <= set(df.columns):
             prices[t] = df
-    nifty = data.read_csv(DIR / "IDX_NSEI.csv")
-    vix = data.read_csv(DIR / "IDX_INDIAVIX.csv")["close"]
+    nifty = data.read_csv(folder / "IDX_NSEI.csv")
+    vix = data.read_csv(folder / "IDX_INDIAVIX.csv")["close"]
     return prices, nifty, vix

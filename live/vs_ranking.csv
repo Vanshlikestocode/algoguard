@@ -1,0 +1,51 @@
+rank,stock,sector,stress_score,momentum_120d_pct,volatility_20d_pct,beta,in_top_10
+1,NESTLEIND,Fast Moving Consumer Goods,0.6109,-6.3405,26.6854,0.528,True
+2,HINDALCO,Metals & Mining,0.5988,-17.0721,25.6422,0.8276,True
+3,TECHM,Information Technology,0.5941,21.7328,17.1802,0.6641,True
+4,NTPC,Power,0.5922,-15.2027,21.918,0.4641,True
+5,HCLTECH,Information Technology,0.5844,15.7472,18.9498,0.833,True
+6,MAXHEALTH,Healthcare,0.5779,12.2082,30.0416,0.761,True
+7,BSE,Financial Services,0.5739,-8.5656,33.7516,0.7971,True
+8,CIPLA,Healthcare,0.571,1.9468,13.4717,0.3137,True
+9,INFY,Information Technology,0.5641,-1.158,29.2168,1.008,True
+10,SUNPHARMA,Healthcare,0.5621,5.0378,17.2676,0.3935,True
+11,POWERGRID,Power,0.5539,-5.9045,25.4859,0.5068,False
+12,APOLLOHOSP,Healthcare,0.5537,12.6486,30.3336,0.4105,False
+13,BAJAJ-AUTO,Automobile and Auto Components,0.5534,2.9159,20.4263,0.6962,False
+14,TCS,Information Technology,0.5486,6.3318,19.264,0.9381,False
+15,ASIANPAINT,Consumer Durables,0.5476,-1.2895,25.1806,1.0479,False
+16,TATACONSUM,Fast Moving Consumer Goods,0.5444,-1.9094,32.6677,0.7695,False
+17,TATASTEEL,Metals & Mining,0.5373,-12.6666,31.6632,0.8308,False
+18,ITC,Fast Moving Consumer Goods,0.5249,4.2524,21.5108,0.9459,False
+19,DRREDDY,Healthcare,0.5214,7.3277,25.9346,0.2945,False
+20,COALINDIA,Oil Gas & Consumable Fuels,0.5206,-10.346,25.1486,0.2305,False
+21,TMPV,Automobile and Auto Components,0.5164,-31.8204,46.7782,1.2193,False
+22,ADANIENT,Metals & Mining,0.516,-7.7343,33.366,1.1733,False
+23,ONGC,Oil Gas & Consumable Fuels,0.5068,-12.4617,22.2705,-0.0515,False
+24,GRASIM,Construction Materials,0.505,-0.2892,24.2408,1.0183,False
+25,SBILIFE,Financial Services,0.5046,-0.1967,23.2059,0.7726,False
+26,HDFCLIFE,Financial Services,0.5043,-0.6812,29.158,1.0618,False
+27,TITAN,Consumer Durables,0.5015,13.749,32.6855,0.9309,False
+28,HINDUNILVR,Fast Moving Consumer Goods,0.5012,-2.8075,22.6741,1.0587,False
+29,ETERNAL,Consumer Services,0.4995,45.263,29.3024,1.1039,False
+30,ADANIPORTS,Services,0.4939,6.6762,32.0632,0.7878,False
+31,BEL,Capital Goods,0.488,-1.9974,22.9033,0.7629,False
+32,TRENT,Consumer Services,0.4877,15.7994,28.6075,1.02,False
+33,LT,Construction,0.4845,3.2528,18.32,1.0618,False
+34,BHARTIARTL,Telecommunication,0.4827,19.6777,23.4278,0.7941,False
+35,JSWSTEEL,Metals & Mining,0.4804,5.2175,33.1093,0.9313,False
+36,BAJAJFINSV,Financial Services,0.4729,6.1681,24.4391,1.2167,False
+37,SHRIRAMFIN,Financial Services,0.4718,4.0163,43.6813,1.8425,False
+38,JIOFIN,Financial Services,0.467,-5.6301,29.1148,1.4919,False
+39,BAJFINANCE,Financial Services,0.4578,24.2937,36.1321,1.5896,False
+40,INDIGO,Services,0.4497,26.8468,32.3416,1.4923,False
+41,AXISBANK,Financial Services,0.4406,12.4759,26.655,1.1556,False
+42,EICHERMOT,Automobile and Auto Components,0.4403,14.2254,27.8992,1.0457,False
+43,ULTRACEMCO,Construction Materials,0.4373,14.9896,24.1006,1.1679,False
+44,SBIN,Financial Services,0.4355,20.8109,22.9942,0.8958,False
+45,MARUTI,Automobile and Auto Components,0.4338,7.8062,36.7873,1.1122,False
+46,M&M,Automobile and Auto Components,0.4307,17.6198,37.2085,1.4402,False
+47,KOTAKBANK,Financial Services,0.4258,34.4848,23.5441,0.878,False
+48,HDFCBANK,Financial Services,0.4242,15.505,24.0558,1.2225,False
+49,RELIANCE,Oil Gas & Consumable Fuels,0.4127,4.7433,43.0558,1.2178,False
+50,ICICIBANK,Financial Services,0.3991,31.6321,27.6255,1.0187,False

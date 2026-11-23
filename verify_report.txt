@@ -2,7 +2,7 @@ python 3.11.18, pandas 3.1.1, numpy 2.4.6
 
 [PASS] package versions match requirements.txt
 [PASS] data: 67/67 files match the manifest
-[PASS] unit tests: 32 passed in 12.20s
+[PASS] unit tests: 37 passed in 12.38s
 [PASS] results/10_calendar_returns.csv  largest relative difference 0.0e+00
 [PASS] results/11_risk_profiles.csv  largest relative difference 0.0e+00
 [PASS] results/1_main_comparison.csv  largest relative difference 0.0e+00

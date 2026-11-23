@@ -70,6 +70,7 @@ ic = csv(V / "overfitting_ic.csv")
 cap = csv(V / "capacity.csv")["value"]
 acc = csv(V / "forecast_accuracy.csv")
 nifty = read_csv(ROOT / "data" / "IDX_NSEI.csv")
+LIVE_START = pd.Timestamp(os.environ.get("ALGOGUARD_LIVE_START", "2026-11-23")).strftime("%d %b %Y")
 SPAN = f"{info['start'][:4]}–{info['end'][:4]}"
 TSPAN = f"{info['start'][:4]}-{info['end'][:4]}"  # label used inside the CSVs
 
@@ -141,7 +142,7 @@ tests = Counter(x.split("::")[0].split("/")[-1] for x in collected if "::" in x)
 n_tests = sum(tests.values())
 result_files = sorted(R.glob("*.csv")) + sorted(R.glob("*.json")) + sorted(V.glob("*.csv")) + sorted(V.glob("*.json"))
 n_data = len(list((ROOT / "data").rglob("*.csv")))
-code_files = sorted((ROOT / "algoguard").glob("*.py")) + [ROOT / f for f in ("run.py", "run_vs.py", "verify.py", "paper_trade.py", "app.py")] \
+code_files = sorted((ROOT / "algoguard").glob("*.py")) + [ROOT / f for f in ("run.py", "run_vs.py", "verify.py", "live_update.py", "paper_trade.py", "app.py")] \
     + sorted((ROOT / "pages").glob("*.py"))
 total_lines = sum(lines(p) for p in code_files) + sum(lines(p) for p in (ROOT / "tests").glob("*.py"))
 
@@ -182,6 +183,9 @@ DESC = {
     "verify.py": "Independent re-run check (section 2)",
     "paper_trade.py": "Paper replay through the broker layer (order path only)",
     "app.py": "Streamlit dashboard, main page",
+    "live.py": "Live mode: forward paper-trading record (append-only ledger), plan for the next open, VolSelect snapshot",
+    "live_update.py": "Daily live update after the NSE close (run by GitHub Actions at 18:00 IST); writes live/ only",
+    "3_Live_Market.py": "Streamlit dashboard, live page: self-refreshing delayed quotes, forward record, next-open plan",
     "2_Volatility_Selection.py": "Streamlit dashboard, VolSelect page",
     "__init__.py": "Package marker",
 }
@@ -192,7 +196,8 @@ TEST_DESC = {
     "test_explain.py": "Cooldown day, blocked entry, quiet and closed days explained correctly",
     "test_scanner.py": "Flags a stock that calms while VIX rises; flags nothing when VIX falls",
     "test_trade_stats.py": "Win/loss counts, profit factor, losing streak, holding period, calendar returns on a hand-checked example",
-    "test_dashboard.py": "Both dashboard pages render on the bundled data without an exception",
+    "test_dashboard.py": "All three dashboard pages render on the bundled data without an exception (live page offline)",
+    "test_live.py": "Live mode: flat until the record starts; ledger is append-only and never rewrites a stored day; VIX block shows in the plan; today's bar ignored until final",
 }
 claim(set(tests) <= set(TEST_DESC), "every test file is described")
 
@@ -516,7 +521,7 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
  ["Risk reduction out of sample", '<span class="pos">Shown, modest</span>', "v1 and Conservative cut 2022+ drawdown on all three strategies; they cost return over the full period"],
  ["Tuning rules on past data", '<span class="neg">Did not carry over</span>', "v2 better in sample, worse out of sample on all three"],
  ["Return edge over a benchmark", '<span class="neg">Not shown</span>', "No strategy beats NIFTY; VolSelect trails equal weight from 2022 even before costs"],
- ["Live track record", '<span class="neg">Not yet</span>', "Needs a broker-empanelled setup and a live feed"],
+ ["Live track record", '<span class="warn">Started</span>', f"Forward paper record from {LIVE_START}, one git commit per trading day; live broker execution needs empanelment"],
 ])}
 <h3>The product: AlgoGuard Risk Layer, licensed to brokers and algo platforms</h3>
 <div class="grid2"><div>
@@ -538,13 +543,13 @@ VERDICT: ALL RESULTS REPRODUCED</pre>
 <h3>Roadmap to a pilot</h3>
 {table(["Step", "Deliverable", "Proves"], [
  ["1. Intraday enforcement", "Minute data; daily loss limit and stops act intraday, not at the next open", "Rules work at the speed users lose money"],
- ["2. Live paper record", "Daily paper trading on live prices for 3 months, audit log published", "Backtest behaviour holds live"],
+ ["2. Live paper record (started)", f"Running since the close of {LIVE_START}: every trading day at 18:00 IST a scheduled job re-runs the engine on fresh prices and commits the day to an append-only ledger; Live Market page in the dashboard", "Backtest behaviour holds live, with a timestamped record"],
  ["3. F&amp;O support", "Margin-aware sizing and loss limits for futures and options", "Covers where SEBI found the losses"],
  ["4. Broker pilot", "Integration with one broker's API sandbox, as its empanelled agent", "A paying customer and the compliance path"],
  ["5. VolSelect research", "Point-in-time members; look for an out-of-sample gross edge before anything else", "Whether selection adds anything"],
 ])}
 <h3>Risks a buyer should weigh</h3>
-<p>Regulation is still settling (exchange standards on top of the SEBI circular); brokers may build controls in house; daily-bar results may differ from intraday behaviour; and nothing here has a live record yet.</p>
+<p>Regulation is still settling (exchange standards on top of the SEBI circular); brokers may build controls in house; daily-bar results may differ from intraday behaviour; and the forward paper record has only just started, so it is too short to judge yet.</p>
 </div>
 
 <div class="section"><h2>9. Corrections to our October results, and the independent review</h2>

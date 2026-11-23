@@ -34,14 +34,16 @@ def _clean(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def download(tickers=None, start="2012-01-01", end=None, force=False) -> None:
-    """Download daily OHLCV for tickers + NIFTY + India VIX into DATA_DIR as CSV."""
+def download(tickers=None, start="2012-01-01", end=None, force=False, folder=None) -> None:
+    """Download daily OHLCV for tickers + NIFTY + India VIX as CSV into `folder` (default DATA_DIR,
+    the frozen research data; the live record uses its own folder so it never touches that)."""
     import yfinance as yf  # imported lazily so the package works offline
 
     tickers = list(tickers or DEFAULT_TICKERS)
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    folder = Path(folder or DATA_DIR)
+    folder.mkdir(parents=True, exist_ok=True)
     for t in tickers + [INDEX_TICKER, VIX_TICKER]:
-        path = DATA_DIR / f"{t.replace('^', 'IDX_')}.csv"
+        path = folder / f"{t.replace('^', 'IDX_')}.csv"
         if path.exists() and not force and read_csv(path) is not None:
             print(f"  cached  {t}")
             continue
@@ -79,11 +81,12 @@ def read_csv(path: Path) -> pd.DataFrame | None:
     return df if len(df) > 50 else None
 
 
-def load_real(tickers=None):
+def load_real(tickers=None, folder=None):
     tickers = list(tickers or DEFAULT_TICKERS)
+    folder = Path(folder or DATA_DIR)
     prices = {}
     for t in tickers:
-        path = DATA_DIR / f"{t}.csv"
+        path = folder / f"{t}.csv"
         if path.exists():
             df = read_csv(path)
             if df is None or not {"open", "high", "low"} <= set(df.columns):
@@ -92,10 +95,10 @@ def load_real(tickers=None):
             prices[t] = df
     if not prices:
         raise FileNotFoundError(
-            f"No price CSVs in {DATA_DIR}. Run:  python run.py --download"
+            f"No price CSVs in {folder}. Run:  python run.py --download"
         )
-    vix_df = read_csv(DATA_DIR / f"{VIX_TICKER.replace('^', 'IDX_')}.csv")
-    index = read_csv(DATA_DIR / f"{INDEX_TICKER.replace('^', 'IDX_')}.csv")
+    vix_df = read_csv(folder / f"{VIX_TICKER.replace('^', 'IDX_')}.csv")
+    index = read_csv(folder / f"{INDEX_TICKER.replace('^', 'IDX_')}.csv")
     vix = vix_df["close"] if vix_df is not None else None
     if vix is None:
         print("  WARNING: India VIX data missing; the VIX filter will never fire")

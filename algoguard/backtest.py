@@ -28,6 +28,7 @@ class Result:
     blocked: dict
     exposure: pd.Series
     config: RiskConfig
+    final: dict | None = None  # state after the last close: open positions, risk manager, stopped-out flags
 
 
 def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg: RiskConfig,
@@ -113,6 +114,9 @@ def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg
         expo[t] = mv / equity[t] if equity[t] > 0 else 0
         risk.on_close(t, equity[t], equity[t] / equity[t - 1] - 1, closed)
 
+    final = {"qty": dict(zip(syms, qty.copy())), "entry_px": dict(zip(syms, entry_px.copy())),
+             "entry_date": dict(zip(syms, list(entry_date))), "stop": dict(zip(syms, stop.copy())),
+             "stopped_out": dict(zip(syms, stopped_out.copy())), "cash": cash, "risk": risk, "n": n}
     # close anything still open at the last close, for trade statistics only
     for j in range(m):
         if qty[j] > 0:
@@ -125,4 +129,5 @@ def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg
         blocked=risk.blocked,
         exposure=pd.Series(expo, index=dates, name="exposure"),
         config=cfg,
+        final=final,
     )

@@ -15,7 +15,7 @@ pip install -r requirements.txt
 python verify.py
 ```
 
-`verify.py` checks the 67 bundled data files against `data/MANIFEST.sha256`, runs the 32 unit tests, re-runs both studies into a temporary folder and compares all 45 result files cell by cell with `results/`. Expected last line: `VERDICT: ALL RESULTS REPRODUCED` (about 90 seconds, offline). Do not run `--download` first: Yahoo revises adjusted prices over time, so fresh data moves the numbers slightly (a data difference, which the manifest check reports). Full write-up: `AlgoGuard_VolSelect_Review_Report.pdf` (architecture, results, win/loss, commercial viability).
+`verify.py` checks the 67 bundled data files against `data/MANIFEST.sha256`, runs the 37 unit tests, re-runs both studies into a temporary folder and compares all 45 result files cell by cell with `results/`. Expected last line: `VERDICT: ALL RESULTS REPRODUCED` (about 90 seconds, offline). Do not run `--download` first: Yahoo revises adjusted prices over time, so fresh data moves the numbers slightly (a data difference, which the manifest check reports). Full write-up: `AlgoGuard_VolSelect_Review_Report.pdf` (architecture, results, win/loss, commercial viability).
 
 ## Run it (Windows, Anaconda/Miniconda Prompt)
 
@@ -24,7 +24,7 @@ cd algoguard
 conda create -n algoguard python=3.11 -y
 conda activate algoguard
 pip install -r requirements.txt
-python -m pytest -q tests          # 32 tests incl. no look-ahead, the commitment lock and the dashboard
+python -m pytest -q tests          # 37 tests incl. no look-ahead, the commitment lock and the dashboard
 python run.py                      # all experiments -> results\
 python paper_trade.py --days 60    # paper-trading replay through the broker layer
 streamlit run app.py               # live dashboard for the demo
@@ -52,11 +52,21 @@ Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 | `verify.py` | Independent re-run check: data manifest, tests, both studies, every result table compared |
 | `app.py` | Streamlit dashboard: start from a risk profile (Conservative / Balanced / Aggressive) or v2, toggle each rule, commitment lock, before-vs-after-2022 check, explain-a-day, volatility scanner, 3-question profile quiz, audit log |
 | `paper_trade.py` | Day-by-day replay through the broker layer |
-| `tests/` | 32 tests: no look-ahead (engine, features, regime forecast, portfolio), rules fire, costs bite, no leverage, rate limiter, MPP pricing, commitment lock, trade statistics, both dashboard pages render |
+| `tests/` | 37 tests: no look-ahead (engine, features, regime forecast, portfolio), rules fire, costs bite, no leverage, rate limiter, MPP pricing, commitment lock, trade statistics, both dashboard pages render |
 
 ## Outputs (`results/`)
 
 `report.md` (all tables), `chart_1_equity_drawdown.png`, `chart_2_ablation.png`, `chart_3_robustness_grid.png`, `chart_4_v2_drawdown.png`, per-strategy trade lists and audit logs as CSV, and the v2 files: `7_v2_comparison.csv`, `7_v2_candidates_in_sample.csv`, `7_v2_chosen_settings.txt/.json` (the dashboard reads the .json for its v2 preset), `8_walk_forward*.csv`, `9_trade_stats.csv`, `10_calendar_returns.csv`, `11_risk_profiles.csv`. VolSelect adds `results/vs/win_loss.csv`, `calendar_returns.csv`, `cost_sensitivity.csv`, `overfitting_ic.csv`, `overfitting_auc.csv`.
+
+## Live market and the forward paper record
+
+The dashboard's **Live Market** page shows delayed NSE quotes that refresh every 5 minutes, the engine's plan for the next open (buy, sell, hold with stop level, or blocked and why), VolSelect's regime and ranking today, and a **forward paper-trading record** that started at the close of 23 Nov 2026.
+
+Every weekday at 18:00 IST, GitHub Actions (`.github/workflows/live-update.yml`) runs `python live_update.py`: it downloads fresh prices into `live/data/` (not committed), re-runs the same engine as the backtests for six portfolios (three strategies × Balanced and Conservative), appends any new day to `live/ledger.csv` and commits it. Old rows are never rewritten, so each day's result is fixed by its git commit timestamp. The research data (`data/`) and results (`results/`) are never touched, so `verify.py` stays exact. Paper trading only: no order is sent anywhere.
+
+```
+python live_update.py               # same update by hand
+```
 
 ## Design choices worth defending
 
