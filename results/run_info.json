@@ -1,0 +1,8 @@
+{
+ "data": "NSE daily data via Yahoo Finance",
+ "stocks": 12,
+ "start": "2012-01-02",
+ "end": "2026-10-16",
+ "sessions": 3645,
+ "split": "2022-01-01"
+}

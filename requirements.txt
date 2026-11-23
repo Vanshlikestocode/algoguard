@@ -1,9 +1,13 @@
-numpy>=1.26
-pandas>=2.1
-matplotlib>=3.8
-yfinance>=0.2.40
-streamlit>=1.35
-plotly>=5.20
-pytest>=8.0
-arch>=7.0
-scikit-learn>=1.4
+# Exact versions. Results were verified with these (python verify.py -> all reproduced), tested on Python 3.11 and 3.13.
+# scikit-learn's gradient boosting gives slightly different fits across versions, which shifts the
+# VolSelect tables, so keep these pins when checking the submitted numbers.
+numpy==2.4.6
+pandas==3.1.1
+matplotlib==3.11.2
+scipy==1.17.1
+scikit-learn==1.9.1
+arch==9.0.0
+yfinance==1.8.0
+streamlit==1.67.0
+plotly==7.1.0
+pytest==9.2.0

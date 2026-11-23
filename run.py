@@ -20,8 +20,8 @@ import pandas as pd
 
 from algoguard import data, v2
 from algoguard.backtest import run_backtest
-from algoguard.metrics import drawdown, summarize
-from algoguard.risk import GUARDED, RAW, RULE_LABELS, RULES, only, without
+from algoguard.metrics import calendar_returns, drawdown, summarize, trade_stats
+from algoguard.risk import GUARDED, PROFILES, RAW, RULE_LABELS, RULES, only, without
 from algoguard.strategies import STRATEGIES, build_signals, ema_crossover
 
 RAW_C, GRD_C, BMK_C, GRID_C = "#B4483C", "#1F6F8B", "#8A8A8A", "#DADADA"
@@ -72,6 +72,9 @@ def main():
         split = dates[int(len(dates) * 0.7)]
     print(f"Data: {len(prices)} stocks, {dates[0].date()} to {dates[-1].date()} ({len(dates)} sessions). {tag}")
 
+    (out / "run_info.json").write_text(json.dumps({"data": tag, "stocks": len(prices), "start": str(dates[0].date()),
+                                                   "end": str(dates[-1].date()), "sessions": len(dates),
+                                                   "split": str(split.date())}, indent=1), encoding="utf-8")
     report = [f"# AlgoGuard results\n\nData: {tag}. {len(prices)} stocks, {dates[0].date()} to {dates[-1].date()}, "
               f"{len(dates)} sessions. Capital Rs 10 lakh, costs 0.15% per side, signals at close, fills next open.\n"]
 
@@ -213,6 +216,7 @@ def main():
                         for what, arr in (("Sharpe", grid[lab]), ("MaxDD %", dd[lab]))})
     rob_s = rob.describe().loc[["mean", "min", "max"]]
     rob_s.index.name = "Across 10 EMA settings"
+    rob_s.to_csv(out / "4_robustness.csv")
     report += ["## 4. Parameter robustness (EMA crossover, 10 settings)\n",
                "Guardrails should help across settings, not just at one lucky parameter choice.\n", md_table(rob_s), ""]
 
@@ -268,10 +272,10 @@ def main():
         indent=2), encoding="utf-8")
     v2_tbl = pd.DataFrame(rows).T[["CAGR %", "Sharpe", "Max drawdown %", "Worst day %", "Days below -2% (count)", "Calmar"]]
     v2_tbl.index.name = "Strategy | layer | period"
-    v2_tbl.to_csv(out / "7_v2_comparison.csv")
     if bench is not None:
         for pname, (s0, e0) in {"In-sample": (None, split - pd.Timedelta(days=1)), "Out-of-sample": (split, None)}.items():
             v2_tbl.loc[f"{bench_name} | {pname}"] = pd.Series(summarize(period(bench, s0, e0) * 1e6))[v2_tbl.columns]
+    v2_tbl.to_csv(out / "7_v2_comparison.csv")
     report += ["## 7. Guarded v2: strategy-aware guardrails\n",
                f"Each strategy picks its own drawdown-breaker mode, VIX filter and stop distance from a fixed menu of "
                f"16 settings. The choice is made by highest Calmar on data before {split.date()} only, then run once on "
@@ -320,8 +324,60 @@ def main():
                "each year is in `8_walk_forward_picks.csv`.\n", md_table(wf), ""]
     print(wf.round(2).to_string())
 
+    # ---------------- 9. Trade statistics: win/loss ---------------------------------------
+    rows = {}
+    for name in STRATEGIES:
+        for label in ("Raw", "Guarded", "Guarded v2"):
+            tr = results[(name, label)].trades
+            lab = "Guarded v1" if label == "Guarded" else label
+            rows[f"{name} | {lab} | {dates[0].year}-{dates[-1].year}"] = trade_stats(tr)
+            rows[f"{name} | {lab} | Out-of-sample"] = trade_stats(tr[pd.to_datetime(tr.entry_date) >= split])
+    ts = pd.DataFrame(rows).T
+    ts.index.name = "Strategy | layer | trades entered"
+    ts.to_csv(out / "9_trade_stats.csv")
+    ts_cols = ["Trades", "Win rate %", "Win/loss count ratio", "Avg win %", "Avg loss %",
+               "Payoff ratio (avg win / avg loss)", "Profit factor", "Expectancy per trade %",
+               "Max losing streak (trades)", "Avg holding (calendar days)"]
+    report += ["## 9. Trade statistics (win/loss)\n",
+               "Every round trip, after costs on both sides. A trade that only covered its costs counts as a loss. "
+               "Out-of-sample = trades entered on or after the split date. Positions still open at the end are closed at the "
+               "last close for these statistics only. Full columns in `9_trade_stats.csv`.\n",
+               md_table(ts[ts_cols]), ""]
+    print(ts[ts_cols].round(2).to_string())
+
+    # ---------------- 10. Calendar-year returns ------------------------------------------
+    cal = {f"{n.split()[0]} {lab.replace('Guarded', 'v1') if lab == 'Guarded' else lab.replace('Guarded ', '')}":
+           calendar_returns(results[(n, lab)].equity) for n in STRATEGIES for lab in ("Raw", "Guarded", "Guarded v2")}
+    if bench is not None:
+        cal[bench_name] = calendar_returns(bench)
+    cal = pd.DataFrame(cal)
+    cal.index.name = "Year"
+    cal.to_csv(out / "10_calendar_returns.csv")
+    report += ["## 10. Calendar-year returns %\n",
+               f"{dates[-1].year} is a partial year (to {dates[-1].date()}).\n", md_table(cal), ""]
+
+    # ---------------- 11. Risk profiles (hand-set before testing, as in the dashboard) ------------
+    rows = {}
+    for name in STRATEGIES:
+        for lab, cfg in (("No rules", RAW), *PROFILES.items()):
+            r = results[(name, "Raw")] if cfg is RAW else (results[(name, "Guarded")] if cfg is GUARDED else
+                                                          run_backtest(prices, signals[name], vix, cfg))
+            full, oos_ = summarize(r.equity, exposure=r.exposure), summarize(period(r.equity, split, None) * 1e6)
+            rows[f"{name} | {lab}"] = {f"CAGR % {dates[0].year}-{dates[-1].year}": full["CAGR %"], f"Max DD % {dates[0].year}-{dates[-1].year}": full["Max drawdown %"],
+                                      "Avg exposure %": full["Avg exposure %"],
+                                      "CAGR % out-of-sample": oos_["CAGR %"], "Max DD % out-of-sample": oos_["Max drawdown %"]}
+    prof = pd.DataFrame(rows).T
+    prof.index.name = "Strategy | profile"
+    prof.to_csv(out / "11_risk_profiles.csv")
+    report += ["## 11. Risk profiles\n",
+               "Conservative / Balanced (= v1) / Aggressive were set by hand before testing (see `risk.py` PROFILES), "
+               "not tuned on the data.\n", md_table(prof), ""]
+
     report += ["## Limitations\n",
                "- Survivorship bias: the universe is today's large caps, tested back to 2012.\n"
+               "- Dividends: stock prices are dividend-adjusted (total return) but the NIFTY 50 benchmark (^NSEI) is a price "
+               "index, so comparisons with NIFTY favour the strategies by roughly its dividend yield (about 1.2-1.5% a year).\n"
+               "- Uninvested cash earns nothing, while Sharpe subtracts a 6.5% risk-free rate; this understates partly-invested strategies.\n"
                "- Daily bars: the daily-loss rule acts at the next open, not intraday. Intraday enforcement needs tick or minute data.\n"
                "- Stops fill at the stop price unless the open gaps through it; real slippage in fast markets can be worse.\n"
                "- Yahoo Finance data is unofficial; corporate-action adjustments can contain errors.\n"

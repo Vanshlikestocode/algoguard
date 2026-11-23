@@ -4,6 +4,7 @@
  "regime": "rising",
  "vix": 16.860000610351562,
  "rv20": 16.318591980998935,
- "headline": "Regime switch (LR) + 12% trigger",
+ "headline": "Regime switch (LR), no trigger",
+ "trigger_variant": "Regime switch (LR) + 12% trigger",
  "k": 10
 }

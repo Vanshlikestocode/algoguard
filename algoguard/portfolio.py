@@ -95,7 +95,9 @@ def run(O: pd.DataFrame, C: pd.DataFrame, vol: pd.DataFrame, scores: dict, regim
                 row = frame.loc[idx[i - 1]].where(O.iloc[i].notna())
                 w = pick(row, vol.iloc[i - 1], k, name == "equal_weight")
                 eq_open = cash + float((shares * Of.iloc[i]).fillna(0).sum())
-                target = (w * eq_open * (1 - 2 * cost) / O.iloc[i][w.index]).reindex(C.columns, fill_value=0.0)  # buffer: never leveraged
+                # a holding with no open price today cannot be sold, so it stays as is and only the rest is re-spent
+                stuck = float((shares * Of.iloc[i]).where(O.iloc[i].isna(), 0.0).fillna(0).sum())
+                target = (w * (eq_open - stuck) * (1 - 2 * cost) / O.iloc[i][w.index]).reindex(C.columns, fill_value=0.0)  # buffer: never leveraged
                 tradable = O.iloc[i].notna() | target.gt(0)
                 delta = (target - shares).where(tradable, 0.0)
                 notional = (delta.abs() * Of.iloc[i]).fillna(0).sum()

@@ -6,7 +6,10 @@ and RSI-2). v2 lets each strategy pick its own setting for the three rules in qu
 from a small fixed menu, and leaves every other rule as in v1.
 
 Honesty protocol:
-  1. The menu and the selection rule are fixed in this file before any test is run.
+  1. The menu and the selection rule are fixed in this file before the v2 run. The menu's three rules
+     were picked because the 2012-2026 ablation flagged them; re-running that ablation on pre-2022 data
+     only flags the same rules (ATR stop on Donchian and RSI-2, VIX filter on RSI-2), so the hold-out
+     did not shape the menu.
   2. Every candidate is backtested on data BEFORE the split date only (the data is cut,
      not just the scoring window, so nothing after the split can leak in).
   3. The winner per strategy is the highest in-sample Calmar (CAGR / |max drawdown|).
@@ -73,7 +76,8 @@ def walk_forward(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, fir
     for year in range(first_year, last_year + 1):
         start, end = pd.Timestamp(f"{year}-01-01"), pd.Timestamp(f"{year}-12-31")
         cfg, _ = select(prices, signals, vix, start)
-        # the engine keeps running across years; only the settings switch on 1 January
+        # shortcut: each year's returns come from a full-history run with that year's setting, so the
+        # trades needed to switch settings on 1 January are not charged; fine for a 16-setting menu
         eq = run_backtest(prices, signals, vix, cfg).equity
         rets.append(eq.pct_change().loc[start:end])
         picks.append({"Year": year, "Setting chosen on data before it": describe(cfg)})

@@ -51,6 +51,7 @@ def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg
     entry_cost = np.zeros(m)
     entry_date = [None] * m
     stop = np.full(m, np.nan)
+    stopped_out = np.zeros(m, dtype=bool)  # after a stop, wait for the strategy's own exit before buying again
     equity = np.empty(n)
     expo = np.zeros(n)
     equity[0] = capital
@@ -80,8 +81,9 @@ def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg
             if qty[j] > 0 and (S[t - 1, j] == 0 or flatten):
                 closed.append(close_pos(j, O[t, j], t, "risk: flatten" if flatten else "signal"))
         # 2) entries at the open
+        stopped_out &= S[t - 1] == 1  # the signal went to 0: the stop has done its job, re-arm
         for j in range(m):
-            if qty[j] > 0 or S[t - 1, j] != 1 or flatten or np.isnan(O[t, j]):
+            if qty[j] > 0 or S[t - 1, j] != 1 or flatten or stopped_out[j] or np.isnan(O[t, j]):
                 continue
             if block:
                 risk.record_block(t, block, syms[j])
@@ -104,6 +106,7 @@ def run_backtest(prices: dict, signals: pd.DataFrame, vix: pd.Series | None, cfg
             if qty[j] > 0 and stop[j] == stop[j] and L[t, j] <= stop[j]:
                 fill = min(O[t, j], stop[j])
                 closed.append(close_pos(j, fill, t, "risk: ATR stop"))
+                stopped_out[j] = True
         # 4) mark to market at the close
         mv = np.nansum(qty * C[t])
         equity[t] = cash + mv

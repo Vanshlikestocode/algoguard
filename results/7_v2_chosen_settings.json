@@ -4,7 +4,7 @@
     "EMA Crossover (20/100)": {
       "dd_flatten": true,
       "vix_limit": null,
-      "stop_atr_mult": null
+      "stop_atr_mult": 4.0
     },
     "Donchian Breakout (55/20)": {
       "dd_flatten": true,

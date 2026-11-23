@@ -203,7 +203,7 @@ fig.update_yaxes(title_text="Portfolio value (Rs)", row=1, col=1)
 fig.update_yaxes(title_text="Drawdown %", row=2, col=1)
 fig.update_layout(height=560, margin=dict(l=10, r=10, t=10, b=10), legend=dict(orientation="h", y=1.04),
                   hovermode="x unified")
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 t1, t6, t7, t5, t2, t3, t4 = st.tabs(["Full metrics", "Explain a day", "Volatility scanner", "Before vs after 2022", "Audit log", "Trades", "Rule activity"])
 with t7:
@@ -225,7 +225,7 @@ with t7:
         else:
             st.write("VIX rose and every stock got more volatile.")
         st.dataframe(stbl.style.format({c: "{:.1f}" for c in ["Volatility now %", "Volatility before %", "Change %"]}),
-                     use_container_width=True, hide_index=True)
+                     width="stretch", hide_index=True)
         st.caption("A screen, not a buy signal: a stock can look calmer because an old wild patch left the 20-day window.")
 with t6:
     covid = pd.Timestamp("2020-02-28")
@@ -245,7 +245,7 @@ with t5:
     hold.index.names = ["Layer", "Period"]
     st.caption("Tuning the sliders until the chart looks good fits them to the past. Judge your settings on "
                "2022 onward: if they only shine before 2022, they will probably not hold up.")
-    st.dataframe(hold.style.format("{:.2f}"), use_container_width=True)
+    st.dataframe(hold.style.format("{:.2f}"), width="stretch")
     d_in = hold.loc[("Guarded", "Before 2022"), "Calmar"] - hold.loc[("Raw", "Before 2022"), "Calmar"]
     d_out = hold.loc[("Guarded", "2022 onward"), "Calmar"] - hold.loc[("Raw", "2022 onward"), "Calmar"]
     verdict = ("helps in both periods" if d_in > 0 and d_out > 0 else
@@ -253,20 +253,21 @@ with t5:
                "helps only from 2022" if d_out > 0 else "does not beat raw in either period")
     st.markdown(f"**Guarded vs raw on Calmar:** {d_in:+.2f} before 2022, {d_out:+.2f} from 2022. This setup {verdict}.")
 with t1:
-    full = pd.DataFrame({"Raw": summarize(e_raw, raw.trades, raw.exposure.loc[sl]),
-                         "Guarded": summarize(e_grd, grd.trades, grd.exposure.loc[sl])})
-    st.dataframe(full.style.format("{:.2f}"), use_container_width=True)
+    in_period = lambda tr: tr[(tr.entry_date >= sl.start) & (tr.entry_date <= sl.stop)] if len(tr) else tr  # trades entered in the slider period
+    full = pd.DataFrame({"Raw": summarize(e_raw, in_period(raw.trades), raw.exposure.loc[sl]),
+                         "Guarded": summarize(e_grd, in_period(grd.trades), grd.exposure.loc[sl])})
+    st.dataframe(full.style.format("{:.2f}"), width="stretch")
 with t2:
     ev = grd.events[(grd.events.date >= sl.start) & (grd.events.date <= sl.stop)].copy()
     ev["rule"] = ev["rule"].map(RULE_LABELS).fillna(ev["rule"])
     rules = st.multiselect("Rules", sorted(ev.rule.unique()), default=sorted(ev.rule.unique()))
     st.caption("Every time the risk layer blocked, paused, halted or re-armed, with the reason.")
-    st.dataframe(ev[ev.rule.isin(rules)].sort_values("date", ascending=False), use_container_width=True, height=380)
+    st.dataframe(ev[ev.rule.isin(rules)].sort_values("date", ascending=False), width="stretch", height=380)
 with t3:
     tr = grd.trades
     if len(tr):
         tr = tr[(tr.exit_date >= sl.start) & (tr.entry_date <= sl.stop)]
-    st.dataframe(tr, use_container_width=True, height=380)
+    st.dataframe(tr, width="stretch", height=380)
 with t4:
     act = {RULE_LABELS.get(k, k): v for k, v in grd.blocked.items()}
     if len(grd.trades):

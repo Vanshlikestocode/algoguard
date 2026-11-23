@@ -1,6 +1,8 @@
-"""Paper-trading replay: walks the last N sessions one day at a time through the SAME
-strategy + risk engine, but routes orders through the broker layer (daily login, 10 orders/s
-limit, MPP-protected limit orders, strategy tags). This is the bridge from backtest to live.
+"""Paper-trading replay: walks the last N sessions one day at a time through the same strategy
+signals and the same entry-blocking rules (VIX filter, daily loss limit, drawdown breaker), but routes
+orders through the broker layer (daily login, 10 orders/s limit, MPP-protected limit orders, strategy
+tags). It tests the order path, not performance: no costs, ATR stops or volatility sizing, and no
+trade P&L, so the losing-streak rule cannot fire here. This is the bridge from backtest to live.
 
     python paper_trade.py --days 60          # real data
     python paper_trade.py --days 60 --demo

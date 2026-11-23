@@ -71,3 +71,18 @@ def test_breaker_block_only_never_force_sells():
     assert not (r.trades.exit_reason == "risk: flatten").any()
     flat = run_backtest(P, sig, V, replace(cfg, dd_flatten=True))
     assert (flat.trades.exit_reason == "risk: flatten").any()
+
+
+def test_no_rebuy_after_stop_until_signal_resets():
+    """A stopped-out stock is not bought back while the strategy still says 'long'."""
+    from dataclasses import replace
+    sig = build_signals(P, ema_crossover)
+    r = run_backtest(P, sig, V, replace(RAW, enabled=True, stop_atr_mult=1.0))
+    stops = r.trades[r.trades.exit_reason == "risk: ATR stop"]
+    assert len(stops) > 0
+    for _, st in stops.iterrows():
+        later = r.trades[(r.trades.symbol == st.symbol) & (r.trades.entry_date > st.exit_date)]
+        if len(later):
+            nxt = later.entry_date.min()
+            between = sig.loc[st.exit_date:nxt, st.symbol].iloc[:-1]
+            assert (between == 0).any(), f"{st.symbol} re-bought on {nxt} without the signal resetting"

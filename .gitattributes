@@ -1,0 +1,3 @@
+data/** -text
+results/** -text
+*.py text eol=lf

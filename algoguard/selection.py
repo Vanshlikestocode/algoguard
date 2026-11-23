@@ -73,8 +73,12 @@ def information_coefficient(panel: pd.DataFrame, regime_y: pd.Series, start, end
     """Average daily rank correlation between each feature and the next-N excess return, on days
     of the given realised regime. Positive = a higher value went with beating NIFTY."""
     d = panel.index.get_level_values("date")
-    p = panel[(d >= pd.Timestamp(start)) & (d <= pd.Timestamp(end))]
+    end = d.max() if end is None else pd.Timestamp(end)  # pd.Timestamp(None) is NaT and would select nothing
+    p = panel[(d >= pd.Timestamp(start)) & (d <= end)]
     days = regime_y[regime_y == regime].index[::5]
     p = p[p.index.get_level_values("date").isin(days)].dropna(subset=["fwd_excess"])
-    fe = p.groupby(level="date")["fwd_excess"].rank(pct=True)
-    return pd.Series({c: p[f"{c}_r"].corr(fe) for c in FEATURES})
+    p = p.assign(fe=p.groupby(level="date")["fwd_excess"].rank(pct=True))
+    daily = p.groupby(level="date")[[f"{c}_r" for c in FEATURES] + ["fe"]].apply(
+        lambda g: g.drop(columns="fe").corrwith(g["fe"]))
+    daily.columns = FEATURES
+    return daily.mean()

@@ -38,11 +38,6 @@ date,rule,action,detail
 2014-04-09,consec_loss_limit,BLOCKED ENTRY,HDFCBANK.NS
 2014-04-09,consec_loss_limit,BLOCKED ENTRY,ICICIBANK.NS
 2014-04-09,consec_loss_limit,BLOCKED ENTRY,AXISBANK.NS
-2014-05-06,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
-2014-05-08,consec_loss_limit,BLOCKED ENTRY,TCS.NS
-2014-05-09,consec_loss_limit,BLOCKED ENTRY,TCS.NS
-2014-05-12,consec_loss_limit,BLOCKED ENTRY,TCS.NS
-2014-05-13,consec_loss_limit,BLOCKED ENTRY,TCS.NS
 2014-12-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2015-03-30,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2015-05-08,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
@@ -88,7 +83,7 @@ date,rule,action,detail
 2021-12-10,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
 2021-12-13,consec_loss_limit,BLOCKED ENTRY,KOTAKBANK.NS
 2021-12-21,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
-2022-02-24,daily_loss_limit,COOLDOWN,day P&L -2.42% breached -2%; no entries for 2 sessions
+2022-02-24,daily_loss_limit,COOLDOWN,day P&L -2.43% breached -2%; no entries for 2 sessions
 2022-02-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2022-04-19,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2022-04-26,consec_loss_limit,BLOCKED ENTRY,ITC.NS

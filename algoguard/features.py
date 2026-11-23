@@ -14,7 +14,14 @@ FEATURES = ["beta", "down_beta", "hv_excess", "defensive", "rel_strength", "liqu
 
 def stock_features(df: pd.DataFrame, nifty_close: pd.Series, high_vol_day: pd.Series, defensive: bool) -> pd.DataFrame:
     idx = nifty_close.index
-    c = df["close"].reindex(idx)
+    # On the NIFTY calendar. A day the stock has no bar after listing is a no-trade day: price carried
+    # from the last close, volume 0. Otherwise one missing day would blank every 20-day feature for 20 days.
+    d = df.reindex(idx)
+    last = d["close"].ffill()
+    d[["open", "high", "low", "close"]] = d[["open", "high", "low", "close"]].apply(lambda s: s.fillna(last))
+    d["volume"] = d["volume"].fillna(0).where(last.notna())
+    df = d
+    c = df["close"]
     r, m = c.pct_change(fill_method=None), nifty_close.pct_change()
     f = pd.DataFrame(index=idx)
     cov = r.rolling(120, min_periods=60).cov(m)
@@ -26,8 +33,7 @@ def stock_features(df: pd.DataFrame, nifty_close: pd.Series, high_vol_day: pd.Se
     f["hv_excess"] = (ex * hv).rolling(504, min_periods=60).sum() / hv.rolling(504, min_periods=60).sum().where(lambda x: x >= 20)
     f["defensive"] = float(defensive)
     f["rel_strength"] = c.pct_change(60, fill_method=None) - nifty_close.pct_change(60)
-    f["liquidity"] = np.log((df["close"] * df["volume"]).rolling(20, min_periods=20).mean().reindex(idx))
-    d = df.reindex(idx)
+    f["liquidity"] = np.log((df["close"] * df["volume"]).rolling(20, min_periods=20).mean())
     f["rsi"] = rsi(c, 14).where(c.rolling(15).count() == 15)  # rsi() fills its warm-up with 100
     f["macd"] = macd_hist(c) / c
     f["adx"] = adx(df).reindex(idx)

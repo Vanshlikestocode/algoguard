@@ -70,6 +70,12 @@ def read_csv(path: Path) -> pd.DataFrame | None:
         return None
     df = df.dropna(subset=["close"])
     df = df[~df.index.duplicated()].sort_index()
+    if {"open", "high", "low", "volume"} <= set(df.columns) and (df["volume"] > 0).any():
+        # Yahoo writes a placeholder bar (open = high = low = close, no volume) for days a stock did not
+        # trade: market holidays (e.g. 2014-04-24) and gaps in its feed (e.g. 2025-03-18). No trade was
+        # possible at that price, so the row is dropped rather than traded on.
+        flat = (df["open"] == df["high"]) & (df["high"] == df["low"]) & (df["low"] == df["close"])
+        df = df[~(flat & ~(df["volume"] > 0))]
     return df if len(df) > 50 else None
 
 

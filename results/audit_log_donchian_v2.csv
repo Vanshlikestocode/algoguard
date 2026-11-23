@@ -6,7 +6,7 @@ date,rule,action,detail
 2014-01-03,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2014-01-28,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2015-03-27,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
-2015-08-24,daily_loss_limit,COOLDOWN,day P&L -2.32% breached -2%; no entries for 2 sessions
+2015-08-24,daily_loss_limit,COOLDOWN,day P&L -2.33% breached -2%; no entries for 2 sessions
 2015-08-24,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2015-10-15,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2016-01-11,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
@@ -31,11 +31,11 @@ date,rule,action,detail
 2020-09-17,consec_loss_limit,BLOCKED ENTRY,INFY.NS
 2020-09-22,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2020-12-21,daily_loss_limit,COOLDOWN,day P&L -2.41% breached -2%; no entries for 2 sessions
-2021-02-26,daily_loss_limit,COOLDOWN,day P&L -2.30% breached -2%; no entries for 2 sessions
+2021-02-26,daily_loss_limit,COOLDOWN,day P&L -2.29% breached -2%; no entries for 2 sessions
 2021-07-12,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2021-07-28,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2021-08-04,consec_loss_limit,BLOCKED ENTRY,BHARTIARTL.NS
-2021-10-28,daily_loss_limit,COOLDOWN,day P&L -2.01% breached -2%; no entries for 2 sessions
+2021-10-28,daily_loss_limit,COOLDOWN,day P&L -2.02% breached -2%; no entries for 2 sessions
 2022-04-19,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2022-06-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2022-09-29,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
@@ -43,8 +43,8 @@ date,rule,action,detail
 2023-01-13,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2023-08-14,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2023-10-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
-2024-01-18,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
-2024-01-25,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-01-24,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
+2024-01-30,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions
 2024-06-04,daily_loss_limit,COOLDOWN,day P&L -5.29% breached -2%; no entries for 2 sessions
 2024-06-05,daily_loss_limit,BLOCKED ENTRY,HINDUNILVR.NS
 2024-06-05,consec_loss_limit,PAUSE,3 losing trades in a row; pause 5 sessions

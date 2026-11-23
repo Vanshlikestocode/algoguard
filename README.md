@@ -8,6 +8,15 @@ Research question: **does a pre-committed, automatically enforced risk layer red
 
 This grows out of last semester's TradeGuardian idea. A third-party app cannot stop a person from placing a manual trade in their broker's app. But when an algorithm places the orders, the risk engine sits in the execution path, so enforcement is real. That is the pivot.
 
+## Verify every result in one command (for assessors)
+
+```
+pip install -r requirements.txt
+python verify.py
+```
+
+`verify.py` checks the 67 bundled data files against `data/MANIFEST.sha256`, runs the 32 unit tests, re-runs both studies into a temporary folder and compares all 45 result files cell by cell with `results/`. Expected last line: `VERDICT: ALL RESULTS REPRODUCED` (about 90 seconds, offline). Do not run `--download` first: Yahoo revises adjusted prices over time, so fresh data moves the numbers slightly (a data difference, which the manifest check reports). Full write-up: `AlgoGuard_VolSelect_Review_Report.pdf` (architecture, results, win/loss, commercial viability).
+
 ## Run it (Windows, Anaconda/Miniconda Prompt)
 
 ```
@@ -15,14 +24,13 @@ cd algoguard
 conda create -n algoguard python=3.11 -y
 conda activate algoguard
 pip install -r requirements.txt
-python -m pytest -q tests          # 21 checks incl. no look-ahead and the commitment lock
-python run.py --download           # fetch NSE data (once, needs internet)
+python -m pytest -q tests          # 32 tests incl. no look-ahead, the commitment lock and the dashboard
 python run.py                      # all experiments -> results\
 python paper_trade.py --days 60    # paper-trading replay through the broker layer
 streamlit run app.py               # live dashboard for the demo
 ```
 
-Or double-click `run_all.bat` from an Anaconda Prompt. Offline? Add `--demo` to `run.py` / `paper_trade.py` to use synthetic data (pipeline test only, not market results).
+The data used for every result is bundled in `data/`; `python run.py --download --force` fetches fresh data. Or double-click `run_all.bat` from an Anaconda Prompt (installs, verifies, opens the dashboard). Offline? Add `--demo` to `run.py` / `paper_trade.py` to use synthetic data (pipeline test only, not market results).
 
 Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 
@@ -38,16 +46,17 @@ Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 | `algoguard/commitment.py` | Commitment lock: tightening a rule applies at once, loosening waits (1 h / 24 h / 7 days); turning the lock off or shortening the wait also waits. State saved in `rules_lock.json` |
 | `algoguard/explain.py` | Plain-English explanation of any trading day: what was bought or sold and which rule stepped in |
 | `algoguard/scanner.py` | Volatility scanner: stocks that got calmer while India VIX rose, on any date |
-| `algoguard/metrics.py` | CAGR, Sharpe, Sortino, max drawdown, Calmar, worst day, VaR, profit factor |
+| `algoguard/metrics.py` | CAGR, Sharpe, Sortino, max drawdown, Calmar, worst day, VaR; trade statistics (win rate, win/loss ratio, payoff, profit factor, expectancy, losing streaks, holding period); calendar-year returns |
 | `algoguard/broker.py` | Execution layer built around SEBI's retail algo framework: 10 orders/s limiter, MPP-protected limit orders, daily login, strategy tags. SimBroker + Kite Connect mapping |
-| `run.py` | Experiments: raw vs guarded, in/out-of-sample, ablation, parameter grid, cost sensitivity, intervention counts, v2 (section 7) |
+| `run.py` | Experiments: raw vs guarded, in/out-of-sample, ablation, parameter grid, cost sensitivity, intervention counts, v2 (7), walk-forward (8), trade statistics (9), calendar-year returns (10), risk profiles (11) |
+| `verify.py` | Independent re-run check: data manifest, tests, both studies, every result table compared |
 | `app.py` | Streamlit dashboard: start from a risk profile (Conservative / Balanced / Aggressive) or v2, toggle each rule, commitment lock, before-vs-after-2022 check, explain-a-day, volatility scanner, 3-question profile quiz, audit log |
 | `paper_trade.py` | Day-by-day replay through the broker layer |
-| `tests/` | No look-ahead, rules fire, costs bite, no leverage, rate limiter, MPP pricing |
+| `tests/` | 32 tests: no look-ahead (engine, features, regime forecast, portfolio), rules fire, costs bite, no leverage, rate limiter, MPP pricing, commitment lock, trade statistics, both dashboard pages render |
 
 ## Outputs (`results/`)
 
-`report.md` (all tables), `chart_1_equity_drawdown.png`, `chart_2_ablation.png`, `chart_3_robustness_grid.png`, `chart_4_v2_drawdown.png`, per-strategy trade lists and audit logs as CSV, and the v2 files: `7_v2_comparison.csv`, `7_v2_candidates_in_sample.csv`, `7_v2_chosen_settings.txt/.json` (the dashboard reads the .json for its v2 preset).
+`report.md` (all tables), `chart_1_equity_drawdown.png`, `chart_2_ablation.png`, `chart_3_robustness_grid.png`, `chart_4_v2_drawdown.png`, per-strategy trade lists and audit logs as CSV, and the v2 files: `7_v2_comparison.csv`, `7_v2_candidates_in_sample.csv`, `7_v2_chosen_settings.txt/.json` (the dashboard reads the .json for its v2 preset), `8_walk_forward*.csv`, `9_trade_stats.csv`, `10_calendar_returns.csv`, `11_risk_profiles.csv`. VolSelect adds `results/vs/win_loss.csv`, `calendar_returns.csv`, `cost_sensitivity.csv`, `overfitting_ic.csv`, `overfitting_auc.csv`.
 
 ## Design choices worth defending
 
@@ -58,11 +67,11 @@ Everything runs on a normal laptop CPU in well under a minute. No GPU needed.
 
 ## Limitations
 
-Survivorship bias (today's large caps), daily bars only, unofficial Yahoo data, long-only cash segment. See the end of `results/report.md`.
+Survivorship bias (today's large caps), daily bars only, unofficial Yahoo data (placeholder bars are dropped on loading), dividends in stock prices but not in the NIFTY benchmark, long-only cash segment. See the end of `results/report.md`.
 
-## Review deck
+## Review report
 
-Slides with speaker notes: https://claude.ai/artifact/LHhVegAECfkwGsvkkiif7y (private; ask Vansh for access). Current state and results: `STATUS.md`.
+`AlgoGuard_VolSelect_Review_Report.pdf`: architecture, verified results, win/loss statistics, commercial viability and every correction to the October results. Built from the result files by `python report/build_report.py`, which checks each claim against them.
 
 ## Extension: volatility-aware NIFTY 50 stock selection (academic research prototype, not investment advice)
 
@@ -83,4 +92,4 @@ python run_vs.py --download   # first time
 python run_vs.py
 ```
 
-Headline (walk-forward 2016–2026): the regime switch beat NIFTY buy and hold (18.0% vs 10.4% CAGR) and lost far less in the COVID crash (−7.2% vs −18.6%), but did not beat an equal-weight NIFTY 50 (20.3%), mostly because of survivorship bias and ~35×/yr turnover. Full results and automatic overfitting flags: `results/vs/report.md`.
+Headline (walk-forward 2016–2026, regime switch without trigger): 17.0% a year against 10.4% for NIFTY buy and hold and 20.3% for equal-weight NIFTY 50. It lost less than both benchmarks in the COVID crash (−11.5% vs −18.6% and −19.4%) and in the 2022 sell-off, but from 2022 it trails equal weight even before costs (14.5% vs 15.4% a year), so there is no proven selection edge yet. Stock prices include dividends while NIFTY (^NSEI) does not, and survivorship bias flatters every approach here. Full results: `results/vs/report.md` and the review report.

@@ -74,3 +74,15 @@ def test_equal_weight_holds_every_stock():
     r = portfolio.run(O, C, vol, sc, None, policy="equal_weight", k=3)
     w = list(r.holdings.values())[-1]["weights"]
     assert len(w) == len(P) and abs(max(w.values()) - min(w.values())) < 1e-3
+
+
+def test_never_leveraged_when_a_held_stock_has_no_open():
+    """A held stock with a missing open cannot be sold; the rebalance must not spend its value again."""
+    O, C, vol, sc = _inputs(P)
+    first = portfolio.run(O, C, vol, sc, None, policy="equal_weight", k=3)
+    reb = sorted(first.holdings)[5]  # a later rebalance day, when every stock is held
+    O2 = O.copy()
+    O2.loc[reb, O2.columns[:3]] = float("nan")  # three held stocks have no open that day
+    r = portfolio.run(O2, C, vol, sc, None, policy="momentum", k=3)
+    r_eq = portfolio.run(O2, C, vol, sc, None, policy="equal_weight", k=3)
+    assert (r.exposure <= 1.0 + 1e-9).all() and (r_eq.exposure <= 1.0 + 1e-9).all()
