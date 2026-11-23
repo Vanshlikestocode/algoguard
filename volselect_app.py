@@ -14,6 +14,6 @@ pages = [st.Page("views/overview.py", title="Overview", icon=":material/home:", 
 nav = st.navigation(pages)
 with st.sidebar:
     st.markdown("**VolSelect**  \nNIFTY volatility and risk monitor")
-    st.caption("Updated every trading day at 18:00 IST. Paper trading only; not investment advice.")
+    st.caption("By Vansh Dave and Karthik Agarwal. Updated every trading day at 18:00 IST. Paper trading only; not investment advice.")
     st.caption(f"Companion site: the AlgoGuard risk layer at [{ALGOGUARD_URL.split('//')[1]}]({ALGOGUARD_URL})")
 nav.run()

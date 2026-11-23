@@ -112,7 +112,7 @@ c[2].markdown(":material/school: **Investors learning risk**  \nSee how rules be
               "decision explained.")
 
 st.divider()
-st.caption(f"Academic research prototype (student B.Tech AI project). Not investment advice; nothing here "
+st.caption(f"Built by **Vansh Dave** and **Karthik Agarwal** (B.Tech AI) as an academic research prototype. Not investment advice; nothing here "
            f"is an offer of any service. Selling stock selections in India requires SEBI Research Analyst registration. "
            f"Companion site: the AlgoGuard risk layer at [{ALGOGUARD_URL.split('//')[1]}]({ALGOGUARD_URL}). "
            f"Code and data: [github.com/Vanshlikestocode/algoguard](https://github.com/Vanshlikestocode/algoguard).")
